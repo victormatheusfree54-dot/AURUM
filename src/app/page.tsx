@@ -1,15 +1,14 @@
 import {
   ArrowDownRight,
   ArrowRight,
-  Diamond,
   MapPin,
   Quote,
   Sparkles,
   Star,
 } from "lucide-react";
-import { BeforeAfter } from "@/components/BeforeAfter";
 import { Header } from "@/components/Header";
 import { InstagramIcon } from "@/components/InstagramIcon";
+import { ResultsShowcase } from "@/components/ResultsShowcase";
 
 const services = [
   {
@@ -191,33 +190,12 @@ export default function Home() {
               <h2>Resultados que<br /><em>falam por si.</em></h2>
             </div>
             <div className="resultsIntro">
-              <p>Arraste a linha para comparar cada transformação.</p>
-              <span>Fotos demonstrativas — substitua pelas imagens reais do salão.</span>
+              <p>Veja o que muda quando técnica, cuidado e personalização trabalham juntos.</p>
+              <span>Transformações reais realizadas pela equipe Aurum.</span>
             </div>
           </div>
 
-          <div className="resultsGrid">
-            <BeforeAfter
-              beforeSrc="/images/before-1.jpg"
-              afterSrc="/images/after-1.jpg"
-              title="Volume & comprimento"
-              description="Mega hair com integração suave e acabamento natural."
-            />
-            <BeforeAfter
-              beforeSrc="/images/before-2.jpg"
-              afterSrc="/images/after-2.jpg"
-              title="Cor & luminosidade"
-              description="Transformação pensada para valorizar tom, textura e movimento."
-            />
-          </div>
-
-          <div className="replaceHint">
-            <Diamond size={17} />
-            <p>
-              Para usar suas fotos, troque os arquivos <strong>before-1.jpg</strong>, <strong>after-1.jpg</strong>,
-              <strong> before-2.jpg</strong> e <strong>after-2.jpg</strong> dentro de <strong>public/images</strong>.
-            </p>
-          </div>
+          <ResultsShowcase />
         </div>
       </section>
 

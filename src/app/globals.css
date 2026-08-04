@@ -164,26 +164,34 @@ button, input { font: inherit; }
 .resultsIntro { align-self: end; }
 .resultsIntro p { margin: 0 0 7px; color: rgba(255,255,255,.75); font-size: 14px; }
 .resultsIntro span { color: rgba(255,255,255,.38); font-size: 10px; }
-.resultsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-.resultCard { border: 1px solid rgba(255,255,255,.12); background: #211e1a; }
-.comparison { aspect-ratio: 4/4.35; position: relative; overflow: hidden; background: #756354; }
-.comparisonImage { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.comparisonBefore { z-index: 1; filter: grayscale(.82) sepia(.28) brightness(.68) contrast(.86); }
-.comparisonAfter { z-index: 0; filter: saturate(.8) sepia(.07) contrast(.96); }
-.comparisonLabel { position: absolute; top: 18px; z-index: 3; padding: 7px 10px; background: rgba(20,17,14,.7); backdrop-filter: blur(6px); font-size: 8px; text-transform: uppercase; letter-spacing: .17em; }
-.comparisonLabelBefore { left: 18px; }
-.comparisonLabelAfter { right: 18px; }
-.comparisonLine { position: absolute; top: 0; bottom: 0; width: 1px; z-index: 4; background: rgba(255,255,255,.85); transform: translateX(-50%); pointer-events: none; }
-.comparisonLine span { position: absolute; width: 42px; height: 42px; left: 50%; top: 50%; transform: translate(-50%,-50%); display: grid; place-items: center; border-radius: 50%; background: white; color: var(--ink); box-shadow: 0 6px 20px rgba(0,0,0,.18); }
-.comparisonRange { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 5; opacity: 0; cursor: ew-resize; }
-.resultCaption { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: end; }
-.resultCaption span { font-size: 8px; text-transform: uppercase; letter-spacing: .18em; color: #caa679; }
-.resultCaption h3 { margin: 4px 0 0; font: 27px var(--serif); }
-.resultCaption p { margin: 0; color: rgba(255,255,255,.52); font-size: 10px; line-height: 1.6; }
-.replaceHint { margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,.55); }
-.replaceHint svg { flex: 0 0 auto; color: #caa679; }
-.replaceHint p { margin: 0; font-size: 10px; line-height: 1.6; }
-.replaceHint strong { color: rgba(255,255,255,.82); }
+.resultsShowcase { display: grid; grid-template-columns: minmax(0, 1.16fr) minmax(360px, .84fr); min-height: 720px; border: 1px solid rgba(255,255,255,.13); background: #211e1a; }
+.resultViewer { min-width: 0; position: relative; display: grid; place-items: center; overflow: hidden; background: #100f0d; border-right: 1px solid rgba(255,255,255,.13); }
+.resultViewer::after { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 90px rgba(0,0,0,.22); }
+.resultViewer img { width: 100%; height: 720px; object-fit: contain; }
+.resultImageLabels { position: absolute; z-index: 2; inset: 18px 18px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; pointer-events: none; }
+.resultImageLabels span { width: max-content; padding: 8px 11px; background: rgba(18,15,12,.74); backdrop-filter: blur(8px); text-transform: uppercase; letter-spacing: .17em; font-size: 8px; }
+.resultImageLabels span:last-child { justify-self: end; background: rgba(182,138,76,.9); color: #171512; }
+.resultCounter { position: absolute; z-index: 2; right: 18px; bottom: 17px; padding: 8px 10px; color: rgba(255,255,255,.8); background: rgba(18,15,12,.74); font: 12px var(--serif); letter-spacing: .12em; }
+.resultDetails { display: flex; min-width: 0; flex-direction: column; padding: clamp(34px, 4vw, 62px); }
+.resultDetailsTop > span { color: #d4ae79; text-transform: uppercase; letter-spacing: .18em; font-size: 9px; }
+.resultDetailsTop h3 { max-width: 440px; margin: 12px 0 18px; font: 44px/.98 var(--serif); letter-spacing: -.025em; }
+.resultDetailsTop p { max-width: 430px; margin: 0; color: rgba(255,255,255,.52); font-size: 12px; line-height: 1.75; }
+.featureComparison { display: grid; grid-template-columns: 1fr 1fr; margin-top: 40px; border-top: 1px solid rgba(255,255,255,.13); border-bottom: 1px solid rgba(255,255,255,.13); }
+.featureColumn { min-width: 0; padding: 25px 20px 25px 0; }
+.featureColumn + .featureColumn { padding-right: 0; padding-left: 20px; border-left: 1px solid rgba(255,255,255,.13); }
+.featureColumn > strong { display: block; margin-bottom: 18px; color: rgba(255,255,255,.64); text-transform: uppercase; letter-spacing: .15em; font-size: 9px; }
+.featureColumnWith > strong { color: #d4ae79; }
+.featureColumn ul { display: grid; gap: 13px; padding: 0; margin: 0; list-style: none; }
+.featureColumn li { display: flex; align-items: center; gap: 9px; color: rgba(255,255,255,.54); font-size: 10px; line-height: 1.45; }
+.featureColumn li svg { flex: 0 0 auto; color: rgba(255,255,255,.34); }
+.featureColumnWith li { color: rgba(255,255,255,.84); }
+.featureColumnWith li svg { color: #d4ae79; }
+.resultControls { display: grid; grid-template-columns: 42px 1fr 42px; gap: 12px; align-items: end; margin-top: auto; padding-top: 35px; }
+.resultControls > button { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.2); background: transparent; color: white; display: grid; place-items: center; cursor: pointer; transition: background .2s, color .2s; }
+.resultControls > button:hover { background: #d4ae79; color: #171512; }
+.resultDots { display: grid; grid-template-columns: repeat(5, 1fr); }
+.resultDots button { min-width: 0; padding: 0 0 10px; border: 0; border-bottom: 1px solid rgba(255,255,255,.18); background: transparent; color: rgba(255,255,255,.36); cursor: pointer; font: 11px var(--serif); transition: color .2s, border-color .2s; }
+.resultDots button:hover, .resultDots .resultDotActive { color: #d4ae79; border-color: #d4ae79; }
 
 .aboutSection { display: grid; grid-template-columns: 1.08fr .92fr; gap: clamp(55px, 8vw, 120px); align-items: center; }
 .aboutVisual { min-height: 680px; position: relative; }
@@ -268,8 +276,9 @@ button, input { font: inherit; }
   .servicesGrid { grid-template-columns: 1fr 1fr; grid-template-rows: 440px 320px 320px; }
   .serviceTall { grid-row: auto; }
   .serviceWide { grid-column: 1 / 3; }
-  .resultsGrid { grid-template-columns: 1fr; gap: 30px; }
-  .comparison { aspect-ratio: 4/4; }
+  .resultsShowcase { grid-template-columns: 1fr; min-height: 0; }
+  .resultViewer { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.13); }
+  .resultViewer img { height: min(100vw, 680px); }
   .aboutSection, .locationSection { grid-template-columns: 1fr; }
   .aboutVisual { min-height: 620px; }
   .aboutVisual > img { height: 560px; }
@@ -302,6 +311,14 @@ button, input { font: inherit; }
   .serviceCard { height: 430px; min-height: 430px; }
   .serviceWide { height: 360px; min-height: 360px; }
   .resultCaption { grid-template-columns: 1fr; gap: 12px; }
+  .resultDetails { padding: 30px 22px; }
+  .resultDetailsTop h3 { font-size: 38px; }
+  .featureComparison { margin-top: 30px; }
+  .featureColumn { padding: 22px 12px 22px 0; }
+  .featureColumn + .featureColumn { padding-right: 0; padding-left: 12px; }
+  .featureColumn li { align-items: flex-start; font-size: 9px; }
+  .resultControls { margin-top: 0; padding-top: 30px; grid-template-columns: 38px 1fr 38px; gap: 8px; }
+  .resultControls > button { width: 38px; height: 38px; }
   .aboutVisual { min-height: 510px; }
   .aboutVisual > img { width: 90%; height: 465px; }
   .aboutBadge { width: 155px; padding: 17px; bottom: 20px; }
