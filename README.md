@@ -29,4 +29,4 @@ O Instagram e o endereço já estão configurados. Quando houver telefone/WhatsA
 
 ## Gerar versão final
 
-Execute `npm run build`. O site está configurado para exportação estática e será criado na pasta `out`.
+Execute `npm run build`. O site está configurado para exportação estática e será criado nas pastas `out` e `dist` (esta última é usada pela hospedagem).
