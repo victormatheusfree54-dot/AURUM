@@ -1,6 +1,6 @@
 # Aurum Beauty Concept — site institucional
 
-Site responsivo em Next.js com visual editorial, serviços, avaliações, localização e dois comparadores interativos de antes e depois.
+Site responsivo em Next.js/vinext com visual editorial, serviços, avaliações, localização e dois comparadores interativos de antes e depois.
 
 ## Rodar no computador
 
@@ -29,4 +29,4 @@ O Instagram e o endereço já estão configurados. Quando houver telefone/WhatsA
 
 ## Gerar versão final
 
-Execute `npm run build`. O site está configurado para exportação estática e será criado nas pastas `out` e `dist` (esta última é usada pela hospedagem).
+Execute `npm run build`. O pacote de produção compatível com a hospedagem será criado na pasta `dist`.

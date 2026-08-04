@@ -1,14 +1,20 @@
-import { cpSync, existsSync, rmSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 
-const exportDirectory = resolve("out");
-const hostingDirectory = resolve("dist");
+const serverEntry = resolve("dist/server/index.js");
+const hostingSource = resolve(".openai/hosting.json");
+const hostingDirectory = resolve("dist/.openai");
+const hostingTarget = resolve(hostingDirectory, "hosting.json");
 
-if (!existsSync(exportDirectory)) {
-  throw new Error("A exportacao estatica nao foi encontrada na pasta out.");
+if (!existsSync(serverEntry)) {
+  throw new Error("O pacote vinext nao gerou dist/server/index.js.");
 }
 
-rmSync(hostingDirectory, { recursive: true, force: true });
-cpSync(exportDirectory, hostingDirectory, { recursive: true });
+if (!existsSync(hostingSource)) {
+  throw new Error("A configuracao .openai/hosting.json nao foi encontrada.");
+}
 
-console.log("Exportacao preparada em dist para hospedagem.");
+mkdirSync(hostingDirectory, { recursive: true });
+copyFileSync(hostingSource, hostingTarget);
+
+console.log("Pacote vinext preparado em dist para hospedagem.");
