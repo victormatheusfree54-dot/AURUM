@@ -16,7 +16,6 @@ const services = [
     title: "Mega Hair",
     subtitle: "European Luxury Hair",
     text: "Alongamentos com acabamento natural, escolha personalizada de cor, volume e comprimento.",
-    image: "/images/hair-detail.jpg",
     className: "serviceTall",
   },
   {
@@ -24,7 +23,6 @@ const services = [
     title: "Cabelos",
     subtitle: "Cor, corte e tratamento",
     text: "Técnicas atuais e um cuidado pensado para valorizar a sua identidade.",
-    image: "/images/hero.jpg",
     className: "",
   },
   {
@@ -32,7 +30,6 @@ const services = [
     title: "Unhas",
     subtitle: "Manicure e nail design",
     text: "Do essencial ao sofisticado, com atenção aos detalhes e ao seu estilo.",
-    image: "/images/nails.jpg",
     className: "",
   },
   {
@@ -40,7 +37,6 @@ const services = [
     title: "Estética",
     subtitle: "Cuidado completo",
     text: "Protocolos de beleza em um ambiente acolhedor para você se cuidar por inteiro.",
-    image: "/images/interior.jpg",
     className: "serviceWide",
   },
 ];
@@ -125,7 +121,10 @@ export default function Home() {
 
         <div className="heroVisual">
           <div className="heroFrame">
-            <img src="/images/hero.jpg" alt="Cabelo longo com acabamento elegante" />
+            <div className="photoPlaceholder heroPhotoPlaceholder" aria-label="Espaço reservado para a nova foto principal">
+              <span>Nova imagem principal</span>
+              <small>Modelo de frente</small>
+            </div>
             <span className="verticalWord">AURUM</span>
           </div>
           <div className="ratingCard">
@@ -168,7 +167,7 @@ export default function Home() {
         <div className="servicesGrid">
           {services.map((service) => (
             <article className={`serviceCard ${service.className}`} key={service.number}>
-              <img src={service.image} alt="" />
+              <div className="servicePhotoPlaceholder" aria-hidden="true"><span>0{service.number}</span></div>
               <div className="serviceOverlay" />
               <span className="serviceNumber">{service.number}</span>
               <div className="serviceContent">
@@ -184,24 +183,16 @@ export default function Home() {
 
       <section className="resultsSection" id="resultados">
         <div className="section resultsInner">
-          <div className="sectionHeading lightHeading">
-            <div>
-              <p className="eyebrow"><span /> Antes & depois</p>
-              <h2>Resultados que<br /><em>falam por si.</em></h2>
-            </div>
-            <div className="resultsIntro">
-              <p>Veja o que muda quando técnica, cuidado e personalização trabalham juntos.</p>
-              <span>Transformações reais realizadas pela equipe Aurum.</span>
-            </div>
-          </div>
-
           <ResultsShowcase />
         </div>
       </section>
 
       <section className="section aboutSection">
         <div className="aboutVisual">
-          <img src="/images/salon.jpg" alt="Ambiente de salão de beleza elegante" />
+          <div className="photoPlaceholder aboutPhotoPlaceholder" aria-label="Espaço reservado para uma nova foto do salão">
+            <span>Nova imagem do espaço</span>
+            <small>Aurum Beauty Concept</small>
+          </div>
           <div className="aboutBadge">
             <span>01</span>
             <p>Espaço pensado para você</p>
