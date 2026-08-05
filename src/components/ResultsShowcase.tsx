@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowLeftRight, ArrowRight, Sparkles } from "lucide-react";
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { useEffect, type CSSProperties } from "react";
 
 type SalonPhotoProps = {
   name: string;
@@ -33,89 +33,17 @@ type BeforeAfterSliderProps = {
 };
 
 function BeforeAfterSlider({ before, after, title, className = "", eager = false }: BeforeAfterSliderProps) {
-  const [reveal, setReveal] = useState(50);
-  const [hoveredSide, setHoveredSide] = useState<"before" | "after" | null>(null);
-  const [lockedSide, setLockedSide] = useState<"before" | "after" | null>(null);
-  const isDragging = useRef(false);
-  const style = { "--reveal": `${reveal}%` } as CSSProperties;
-
-  const updateReveal = (event: ReactPointerEvent<HTMLElement>) => {
-    const slider = event.currentTarget.closest(".beforeAfterSlider");
-    if (!slider) return;
-    const rect = slider.getBoundingClientRect();
-    setReveal(Math.max(2, Math.min(98, ((event.clientX - rect.left) / rect.width) * 100)));
-  };
-
-  const startDrag = (event: ReactPointerEvent<HTMLButtonElement>) => {
-    isDragging.current = true;
-    event.currentTarget.setPointerCapture(event.pointerId);
-    updateReveal(event);
-  };
-
-  const stopDrag = (event: ReactPointerEvent<HTMLButtonElement>) => {
-    isDragging.current = false;
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
-  };
-
   return (
-    <div
-      className={`beforeAfterSlider ${hoveredSide ? `isHovering-${hoveredSide}` : ""} ${lockedSide ? `isLocked-${lockedSide}` : ""} ${className}`}
-      style={style}
-      onPointerMove={(event) => {
-        if (isDragging.current || lockedSide) return;
-        const rect = event.currentTarget.getBoundingClientRect();
-        setHoveredSide(event.clientX - rect.left < rect.width * (reveal / 100) ? "before" : "after");
-      }}
-      onPointerLeave={() => setHoveredSide(null)}
-    >
-      <figure
-        className="beforeAfterLayer beforeAfterBefore"
-        role="button"
-        tabIndex={lockedSide === "after" ? -1 : 0}
-        aria-label={`${lockedSide === "before" ? "Voltar à comparação" : "Ver foto Antes inteira"} — ${title}`}
-        onClick={() => setLockedSide((side) => side === "before" ? null : "before")}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") setLockedSide((side) => side === "before" ? null : "before");
-        }}
-      >
+    <div className={`beforeAfterSlider ${className}`} style={{ "--reveal": "50%" } as CSSProperties}>
+      <figure className="beforeAfterLayer beforeAfterBefore">
         <SalonPhoto name={before} alt={`Antes — ${title}`} eager={eager} />
         <figcaption>Antes</figcaption>
       </figure>
-      <figure
-        className="beforeAfterLayer beforeAfterAfter"
-        role="button"
-        tabIndex={lockedSide === "before" ? -1 : 0}
-        aria-label={`${lockedSide === "after" ? "Voltar à comparação" : "Ver foto Depois inteira"} — ${title}`}
-        onClick={() => setLockedSide((side) => side === "after" ? null : "after")}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") setLockedSide((side) => side === "after" ? null : "after");
-        }}
-      >
+      <figure className="beforeAfterLayer beforeAfterAfter">
         <SalonPhoto name={after} alt={`Depois — ${title}`} eager={eager} />
         <figcaption>Depois</figcaption>
       </figure>
       <span className="beforeAfterDivider" aria-hidden="true" />
-      <button
-        className="beforeAfterHandle"
-        type="button"
-        role="slider"
-        aria-label={`Comparar antes e depois — ${title}`}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(reveal)}
-        onPointerDown={startDrag}
-        onPointerMove={(event) => { if (isDragging.current) updateReveal(event); }}
-        onPointerUp={stopDrag}
-        onPointerCancel={stopDrag}
-        onKeyDown={(event) => {
-          if (event.key === "ArrowLeft") setReveal((value) => Math.max(2, value - 5));
-          if (event.key === "ArrowRight") setReveal((value) => Math.min(98, value + 5));
-        }}
-      >
-        <ArrowLeftRight size={16} strokeWidth={1.5} />
-        <span className="srOnly">Arraste para comparar</span>
-      </button>
-      <span className="beforeAfterHint" aria-hidden="true">{lockedSide ? "Clique para voltar" : "Clique na foto ou arraste a bolinha"}</span>
     </div>
   );
 }
