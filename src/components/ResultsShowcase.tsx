@@ -22,10 +22,10 @@ function SalonPhoto({ name, alt, eager = false }: SalonPhotoProps) {
 }
 
 const transformations = [
-  { id: "01", name: "transformacao-1", title: "Alinhamento & brilho", detail: "Textura polida e movimento natural" },
-  { id: "02", name: "transformacao-2", title: "Comprimento renovado", detail: "Mais presença, volume e leveza" },
-  { id: "03", name: "transformacao-3", title: "Loiro luminoso", detail: "Tonalidade elegante e acabamento suave" },
-  { id: "04", name: "transformacao-4", title: "Cor com movimento", detail: "Mechas quentes e ondas marcantes" },
+  { id: "01", name: "transformacao-4", title: "Morena iluminada", detail: "Luz, contraste e ondas marcantes" },
+  { id: "02", name: "transformacao-2", title: "Corte em camadas", detail: "Mais comprimento, balanço e presença" },
+  { id: "03", name: "transformacao-1", title: "Recuperação dos fios", detail: "Textura alinhada, brilho e movimento natural" },
+  { id: "04", name: "transformacao-3", title: "Loiro luminoso", detail: "Tonalidade elegante e acabamento suave" },
 ];
 
 export function ResultsShowcase() {
@@ -65,10 +65,10 @@ export function ResultsShowcase() {
         <div className="backTransformationsHeader">
           <div>
             <span>Antes & depois</span>
-            <h2 id="back-transformations-title">Transformações vistas<br /><em>por todos os ângulos.</em></h2>
+            <h2 id="back-transformations-title">Transformações que<br /><em>fazem você se reconhecer.</em></h2>
           </div>
           <p>
-            Resultados reais que revelam comprimento, volume, cor, textura e acabamento em uma comparação clara.
+            Cada resultado conta uma história de cuidado, confiança e beleza feita para você.
           </p>
         </div>
 

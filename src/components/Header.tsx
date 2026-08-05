@@ -32,8 +32,11 @@ export function Header() {
 
       <header className="header">
         <a className="brand" href="#inicio" aria-label="Aurum Beauty Concept - início">
-          <span className="brandMain">AURUM</span>
-          <span className="brandSub">Beauty Concept</span>
+          <picture className="brandPicture">
+            <source srcSet="/images/aurum-logo.avif" type="image/avif" />
+            <source srcSet="/images/aurum-logo.webp" type="image/webp" />
+            <img src="/images/aurum-logo.webp" alt="Aurum Beauty Concept" />
+          </picture>
         </a>
 
         <nav className="desktopNav" aria-label="Navegação principal">

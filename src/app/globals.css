@@ -53,7 +53,9 @@ button, input { font: inherit; }
   z-index: 50;
   backdrop-filter: blur(16px);
 }
-.brand { justify-self: start; display: flex; flex-direction: column; align-items: center; line-height: 1; }
+.brand { justify-self: start; display: flex; align-items: center; width: clamp(118px, 10vw, 154px); height: 68px; overflow: hidden; }
+.brandPicture, .brandPicture img { display: block; width: 100%; }
+.brandPicture img { opacity: .72; mix-blend-mode: multiply; filter: saturate(.82) contrast(1.04); }
 .brandMain { font-family: var(--serif); font-size: 27px; letter-spacing: 0.12em; }
 .brandSub { margin-top: 4px; font-family: var(--serif); font-size: 9px; letter-spacing: 0.2em; color: var(--gold); }
 .desktopNav { display: flex; gap: clamp(24px, 3.2vw, 48px); align-items: center; }
@@ -247,14 +249,19 @@ button, input { font: inherit; }
 .frontModelStatement span { display: block; color: rgba(255,255,255,.55); font-size: 11px; }
 .frontModelStatement strong { display: block; margin-top: 7px; color: #d7b480; font: italic 37px var(--serif); }
 .frontModelLink { margin-top: 34px; padding-bottom: 8px; display: inline-flex; align-items: center; gap: 30px; border-bottom: 1px solid #d7b480; color: #fff; text-transform: uppercase; letter-spacing: .14em; font-size: 9px; }
-.backTransformations { padding-bottom: 10px; }
+.backTransformations { position: relative; padding: clamp(54px, 7vw, 94px); overflow: hidden; border: 1px solid rgba(212,174,121,.24); background: radial-gradient(circle at 88% 8%, rgba(215,184,163,.13), transparent 30%), linear-gradient(145deg, #181512, #100e0c); }
+.backTransformations::before { content: "A"; position: absolute; right: -1vw; top: -9vw; color: rgba(215,180,128,.035); font: 34vw/.8 var(--serif); pointer-events: none; }
 .backTransformationsHeader { display: grid; grid-template-columns: 1.25fr .75fr; gap: 60px; align-items: end; margin-bottom: 54px; }
 .backTransformationsHeader > div > span { color: #d7b480; text-transform: uppercase; letter-spacing: .2em; font-size: 8px; }
 .backTransformationsHeader h2 { margin: 16px 0 0; font: clamp(48px, 5.8vw, 82px)/.95 var(--serif); letter-spacing: -.04em; }
 .backTransformationsHeader h2 em { color: #d7b8a3; font-weight: 400; }
 .backTransformationsHeader > p { margin: 0; color: rgba(255,255,255,.5); font-size: 12px; line-height: 1.75; }
-.backComparisonGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-.backComparisonCard { min-width: 0; border: 1px solid rgba(212,174,121,.25); background: #1e1b18; }
+.backComparisonGrid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+.backComparisonCard { min-width: 0; overflow: hidden; border: 1px solid rgba(212,174,121,.28); background: rgba(31,27,24,.9); box-shadow: 0 22px 60px rgba(0,0,0,.18); }
+.backComparisonCard:nth-child(3), .backComparisonCard:nth-child(4) { grid-column: 1 / 3; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(230px, .45fr); }
+.backComparisonCard:nth-child(4) { grid-template-columns: minmax(230px, .45fr) minmax(0, 1.55fr); }
+.backComparisonCard:nth-child(4) .backComparisonMedia { grid-column: 2; }
+.backComparisonCard:nth-child(4) .backComparisonCaption { grid-column: 1; grid-row: 1; }
 .backComparisonMedia { position: relative; display: grid; grid-template-columns: 1fr 1fr; aspect-ratio: 1.08; overflow: hidden; }
 .backPhotoSlot { position: relative; min-width: 0; margin: 0; overflow: hidden; background: #554b44; }
 .backPhotoSlot picture, .backPhotoSlot img { display: block; width: 100%; height: 100%; }
@@ -264,7 +271,12 @@ button, input { font: inherit; }
 .backPhotoSlot figcaption { position: absolute; z-index: 2; top: 15px; left: 15px; padding: 8px 10px; color: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.28); background: rgba(18,15,13,.55); backdrop-filter: blur(8px); text-transform: uppercase; letter-spacing: .16em; font-size: 7px; }
 .backPhotoSlotAfter figcaption { color: #171512; border-color: rgba(23,21,18,.15); background: rgba(235,213,185,.88); }
 .backComparisonDivider { position: absolute; z-index: 2; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(255,255,255,.7); }
-.backComparisonCaption { padding: 19px; display: flex; align-items: center; gap: 17px; border-top: 1px solid rgba(212,174,121,.25); }
+.backComparisonCaption { padding: 22px; display: flex; align-items: center; gap: 17px; border-top: 1px solid rgba(212,174,121,.25); }
+.backComparisonCard:nth-child(n+3) .backComparisonMedia { aspect-ratio: 2.2; }
+.backComparisonCard:nth-child(n+3) .backComparisonCaption { border-top: 0; align-items: flex-start; justify-content: center; flex-direction: column; }
+.backComparisonCard:nth-child(n+3) .backComparisonCaption > span { font-size: 34px; }
+.backComparisonCard:nth-child(n+3) .backComparisonCaption strong { font-size: clamp(22px, 2.2vw, 32px); }
+.backComparisonCard:nth-child(n+3) .backComparisonCaption small { max-width: 190px; margin-top: 10px; font-size: 7px; line-height: 1.6; }
 .backComparisonCaption > span { color: #d7b480; font: 24px var(--serif); }
 .backComparisonCaption strong, .backComparisonCaption small { display: block; }
 .backComparisonCaption strong { color: rgba(255,255,255,.82); font: 15px var(--serif); }
@@ -365,6 +377,7 @@ button, input { font: inherit; }
   .backTransformationsHeader { grid-template-columns: 1fr; align-items: start; gap: 28px; }
   .backTransformationsHeader > p { max-width: 560px; }
   .backComparisonGrid { grid-template-columns: 1fr 1fr; }
+  .backComparisonCard:nth-child(3), .backComparisonCard:nth-child(4) { grid-template-columns: minmax(0, 1.35fr) minmax(190px, .65fr); }
   .aboutSection, .locationSection { grid-template-columns: 1fr; }
   .aboutVisual { min-height: 620px; }
   .aboutVisual > img { height: 560px; }
@@ -376,7 +389,7 @@ button, input { font: inherit; }
 
 @media (max-width: 560px) {
   .announcement span:last-child, .announcementDot { display: none; }
-  .brandMain { font-size: 23px; }
+  .brand { width: 110px; height: 58px; }
   .hero { padding: 46px 20px 70px; }
   .hero h1 { font-size: clamp(52px, 17vw, 75px); }
   .heroText { font-size: 13px; }
@@ -430,9 +443,13 @@ button, input { font: inherit; }
   .frontModelCopy { min-height: 570px; padding: 48px 22px 38px; }
   .frontModelCopy h2 { margin-top: 38px; font-size: clamp(48px, 14vw, 66px); }
   .frontModelStatement { padding-top: 38px; }
-  .backTransformations { padding: 0 20px; }
+  .backTransformations { padding: 56px 20px; border-left: 0; border-right: 0; }
   .backTransformationsHeader h2 { font-size: clamp(45px, 13vw, 61px); }
   .backComparisonGrid { grid-template-columns: 1fr; }
+  .backComparisonCard:nth-child(3), .backComparisonCard:nth-child(4) { grid-column: auto; display: block; }
+  .backComparisonCard:nth-child(4) .backComparisonMedia, .backComparisonCard:nth-child(4) .backComparisonCaption { grid-column: auto; grid-row: auto; }
+  .backComparisonCard:nth-child(n+3) .backComparisonMedia { aspect-ratio: 1; }
+  .backComparisonCard:nth-child(n+3) .backComparisonCaption { border-top: 1px solid rgba(212,174,121,.25); flex-direction: row; align-items: center; justify-content: flex-start; }
   .backComparisonMedia { aspect-ratio: 1; }
   .aboutVisual { min-height: 510px; }
   .aboutVisual > img { width: 90%; height: 465px; }
