@@ -9,6 +9,7 @@ import {
 import { Header } from "@/components/Header";
 import { InstagramIcon } from "@/components/InstagramIcon";
 import { ResultsShowcase } from "@/components/ResultsShowcase";
+import { ScrollRevealController } from "@/components/ScrollRevealController";
 
 const services = [
   {
@@ -90,6 +91,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessData) }}
       />
       <Header />
+      <ScrollRevealController />
 
       <section className="hero" id="inicio">
         <div className="heroCopy">

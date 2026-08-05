@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeftRight, ArrowRight, Sparkles } from "lucide-react";
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import { useRef, useState, type CSSProperties, type PointerEvent } from "react";
 
 type SalonPhotoProps = {
   name: string;
@@ -92,23 +92,9 @@ const transformations = [
 ];
 
 export function ResultsShowcase() {
-  useEffect(() => {
-    const elements = document.querySelectorAll<HTMLElement>(".resultsReveal");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("isRevealed");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.14 });
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="newResultsExperience">
-      <section className="frontModelFeature resultsReveal" aria-labelledby="front-model-title">
+      <section className="frontModelFeature" aria-labelledby="front-model-title">
         <div className="frontModelFrame">
           <BeforeAfterSlider
             before="modelo-frente-antes"
@@ -136,7 +122,7 @@ export function ResultsShowcase() {
       </section>
 
       <section className="backTransformations" aria-labelledby="back-transformations-title">
-        <div className="backTransformationsHeader resultsReveal">
+        <div className="backTransformationsHeader">
           <div>
             <span>Antes & depois</span>
             <h2 id="back-transformations-title">Transformações que<br /><em>fazem você se reconhecer.</em></h2>
@@ -147,8 +133,8 @@ export function ResultsShowcase() {
         </div>
 
         <div className="backComparisonGrid">
-          {transformations.map((item, index) => (
-            <article className="backComparisonCard resultsReveal" style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties} key={item.id}>
+          {transformations.map((item) => (
+            <article className="backComparisonCard" key={item.id}>
               <BeforeAfterSlider
                 before={`${item.name}-antes`}
                 after={`${item.name}-depois`}
