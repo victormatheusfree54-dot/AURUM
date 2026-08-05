@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowRight, Sparkles } from "lucide-react";
-import { useEffect, type CSSProperties } from "react";
+import { ArrowLeftRight, ArrowRight, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 
 type SalonPhotoProps = {
   name: string;
@@ -33,8 +33,27 @@ type BeforeAfterSliderProps = {
 };
 
 function BeforeAfterSlider({ before, after, title, className = "", eager = false }: BeforeAfterSliderProps) {
+  const [reveal, setReveal] = useState(50);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  const updateReveal = (clientX: number) => {
+    const bounds = sliderRef.current?.getBoundingClientRect();
+    if (!bounds) return;
+    const nextReveal = ((clientX - bounds.left) / bounds.width) * 100;
+    setReveal(Math.min(96, Math.max(4, nextReveal)));
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    event.currentTarget.setPointerCapture(event.pointerId);
+    updateReveal(event.clientX);
+  };
+
+  const handlePointerMove = (event: PointerEvent<HTMLButtonElement>) => {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) updateReveal(event.clientX);
+  };
+
   return (
-    <div className={`beforeAfterSlider ${className}`} style={{ "--reveal": "50%" } as CSSProperties}>
+    <div ref={sliderRef} className={`beforeAfterSlider ${className}`} style={{ "--reveal": `${reveal}%` } as CSSProperties}>
       <figure className="beforeAfterLayer beforeAfterBefore">
         <SalonPhoto name={before} alt={`Antes — ${title}`} eager={eager} />
         <figcaption>Antes</figcaption>
@@ -44,6 +63,23 @@ function BeforeAfterSlider({ before, after, title, className = "", eager = false
         <figcaption>Depois</figcaption>
       </figure>
       <span className="beforeAfterDivider" aria-hidden="true" />
+      <button
+        type="button"
+        className="beforeAfterHandle"
+        aria-label={`Mover comparação de antes e depois: ${title}`}
+        aria-valuemin={4}
+        aria-valuemax={96}
+        aria-valuenow={Math.round(reveal)}
+        role="slider"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowLeft") setReveal((value) => Math.max(4, value - 2));
+          if (event.key === "ArrowRight") setReveal((value) => Math.min(96, value + 2));
+        }}
+      >
+        <ArrowLeftRight size={18} strokeWidth={1.4} aria-hidden="true" />
+      </button>
     </div>
   );
 }
