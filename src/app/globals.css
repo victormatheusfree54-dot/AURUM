@@ -271,6 +271,27 @@ button, input { font: inherit; }
 .backPhotoSlot figcaption { position: absolute; z-index: 2; top: 15px; left: 15px; padding: 8px 10px; color: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.28); background: rgba(18,15,13,.55); backdrop-filter: blur(8px); text-transform: uppercase; letter-spacing: .16em; font-size: 7px; }
 .backPhotoSlotAfter figcaption { color: #171512; border-color: rgba(23,21,18,.15); background: rgba(235,213,185,.88); }
 .backComparisonDivider { position: absolute; z-index: 2; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(255,255,255,.7); }
+.beforeAfterSlider { position: relative; display: block; overflow: hidden; user-select: none; touch-action: pan-y; cursor: ew-resize; }
+.beforeAfterLayer { position: absolute; inset: 0; margin: 0; overflow: hidden; background: #554b44; }
+.beforeAfterLayer picture, .beforeAfterLayer img { display: block; width: 100%; height: 100%; }
+.beforeAfterLayer img { object-fit: cover; object-position: center 36%; pointer-events: none; }
+.beforeAfterBefore img { filter: saturate(.8) brightness(.88); }
+.beforeAfterAfter { z-index: 1; clip-path: inset(0 0 0 var(--reveal)); }
+.beforeAfterLayer figcaption { position: absolute; z-index: 3; top: 15px; padding: 8px 10px; color: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.28); background: rgba(18,15,13,.58); backdrop-filter: blur(8px); text-transform: uppercase; letter-spacing: .16em; font-size: 7px; }
+.beforeAfterBefore figcaption { left: 15px; }
+.beforeAfterAfter figcaption { right: 15px; color: #171512; border-color: rgba(23,21,18,.15); background: rgba(235,213,185,.9); }
+.beforeAfterDivider { position: absolute; z-index: 4; top: 0; bottom: 0; left: var(--reveal); width: 1px; background: rgba(255,255,255,.9); box-shadow: 0 0 18px rgba(0,0,0,.25); pointer-events: none; }
+.beforeAfterDivider > span { position: absolute; top: 50%; left: 50%; width: 42px; height: 42px; display: grid; place-items: center; transform: translate(-50%,-50%); color: #171512; border: 1px solid rgba(255,255,255,.75); border-radius: 50%; background: #e2bd8c; box-shadow: 0 8px 28px rgba(0,0,0,.25); }
+.beforeAfterRange { position: absolute; z-index: 5; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+.beforeAfterRange:focus-visible + .beforeAfterHint { outline: 2px solid #fff; outline-offset: 4px; }
+.beforeAfterHint { position: absolute; z-index: 4; left: 50%; bottom: 15px; transform: translateX(-50%); padding: 7px 10px; color: rgba(255,255,255,.9); background: rgba(18,15,13,.58); backdrop-filter: blur(8px); text-transform: uppercase; letter-spacing: .13em; white-space: nowrap; font-size: 6px; pointer-events: none; transition: opacity .25s; }
+.beforeAfterSlider:hover .beforeAfterHint { opacity: .35; }
+.frontModelPhotos { position: absolute; inset: 0; display: block; }
+.frontModelPhotos .beforeAfterLayer img { object-position: 50% 32%; }
+.frontModelPhotos .beforeAfterLayer figcaption { top: 26px; }
+.frontModelNumber, .frontModelVertical { z-index: 6; pointer-events: none; }
+.backComparisonMedia { display: block; }
+.backComparisonCard:hover .beforeAfterLayer img { transform: none; }
 .backComparisonCaption { padding: 22px; display: flex; align-items: center; gap: 17px; border-top: 1px solid rgba(212,174,121,.25); }
 .backComparisonCard:nth-child(n+3) .backComparisonMedia { aspect-ratio: 2.2; }
 .backComparisonCard:nth-child(n+3) .backComparisonCaption { border-top: 0; align-items: flex-start; justify-content: center; flex-direction: column; }

@@ -1,4 +1,7 @@
-import { ArrowRight, Sparkles } from "lucide-react";
+"use client";
+
+import { ArrowLeftRight, ArrowRight, Sparkles } from "lucide-react";
+import { useState, type CSSProperties } from "react";
 
 type SalonPhotoProps = {
   name: string;
@@ -21,6 +24,45 @@ function SalonPhoto({ name, alt, eager = false }: SalonPhotoProps) {
   );
 }
 
+type BeforeAfterSliderProps = {
+  before: string;
+  after: string;
+  title: string;
+  className?: string;
+  eager?: boolean;
+};
+
+function BeforeAfterSlider({ before, after, title, className = "", eager = false }: BeforeAfterSliderProps) {
+  const [reveal, setReveal] = useState(50);
+  const style = { "--reveal": `${reveal}%` } as CSSProperties;
+
+  return (
+    <div className={`beforeAfterSlider ${className}`} style={style}>
+      <figure className="beforeAfterLayer beforeAfterBefore">
+        <SalonPhoto name={before} alt={`Antes — ${title}`} eager={eager} />
+        <figcaption>Antes</figcaption>
+      </figure>
+      <figure className="beforeAfterLayer beforeAfterAfter">
+        <SalonPhoto name={after} alt={`Depois — ${title}`} eager={eager} />
+        <figcaption>Depois</figcaption>
+      </figure>
+      <span className="beforeAfterDivider" aria-hidden="true">
+        <span><ArrowLeftRight size={16} strokeWidth={1.5} /></span>
+      </span>
+      <input
+        className="beforeAfterRange"
+        type="range"
+        min="0"
+        max="100"
+        value={reveal}
+        onChange={(event) => setReveal(Number(event.target.value))}
+        aria-label={`Comparar antes e depois — ${title}`}
+      />
+      <span className="beforeAfterHint" aria-hidden="true">Arraste para comparar</span>
+    </div>
+  );
+}
+
 const transformations = [
   { id: "01", name: "transformacao-4", title: "Morena iluminada", detail: "Luz, contraste e ondas marcantes" },
   { id: "02", name: "transformacao-2", title: "Corte em camadas", detail: "Mais comprimento, balanço e presença" },
@@ -33,16 +75,13 @@ export function ResultsShowcase() {
     <div className="newResultsExperience">
       <section className="frontModelFeature" aria-labelledby="front-model-title">
         <div className="frontModelFrame">
-          <div className="frontModelPhotos">
-            <figure className="frontModelPhoto frontModelPhotoBefore">
-              <SalonPhoto name="modelo-frente-antes" alt="Modelo antes da transformação Aurum" eager />
-              <figcaption>Antes</figcaption>
-            </figure>
-            <figure className="frontModelPhoto frontModelPhotoAfter">
-              <SalonPhoto name="modelo-frente-depois" alt="Modelo depois da transformação Aurum" eager />
-              <figcaption>Depois</figcaption>
-            </figure>
-          </div>
+          <BeforeAfterSlider
+            before="modelo-frente-antes"
+            after="modelo-frente-depois"
+            title="Transformação Aurum Woman"
+            className="frontModelPhotos"
+            eager
+          />
           <span className="frontModelNumber">01</span>
           <span className="frontModelVertical">AURUM WOMAN</span>
         </div>
@@ -75,17 +114,12 @@ export function ResultsShowcase() {
         <div className="backComparisonGrid">
           {transformations.map((item) => (
             <article className="backComparisonCard" key={item.id}>
-              <div className="backComparisonMedia">
-                <figure className="backPhotoSlot">
-                  <SalonPhoto name={`${item.name}-antes`} alt={`Antes — ${item.title}`} />
-                  <figcaption>Antes</figcaption>
-                </figure>
-                <figure className="backPhotoSlot backPhotoSlotAfter">
-                  <SalonPhoto name={`${item.name}-depois`} alt={`Depois — ${item.title}`} />
-                  <figcaption>Depois</figcaption>
-                </figure>
-                <span className="backComparisonDivider" aria-hidden="true" />
-              </div>
+              <BeforeAfterSlider
+                before={`${item.name}-antes`}
+                after={`${item.name}-depois`}
+                title={item.title}
+                className="backComparisonMedia"
+              />
               <div className="backComparisonCaption">
                 <span>{item.id}</span>
                 <div><strong>{item.title}</strong><small>{item.detail}</small></div>
