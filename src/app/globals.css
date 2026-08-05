@@ -271,29 +271,46 @@ button, input { font: inherit; }
 .backPhotoSlot figcaption { position: absolute; z-index: 2; top: 15px; left: 15px; padding: 8px 10px; color: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.28); background: rgba(18,15,13,.55); backdrop-filter: blur(8px); text-transform: uppercase; letter-spacing: .16em; font-size: 7px; }
 .backPhotoSlotAfter figcaption { color: #171512; border-color: rgba(23,21,18,.15); background: rgba(235,213,185,.88); }
 .backComparisonDivider { position: absolute; z-index: 2; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(255,255,255,.7); }
-.beforeAfterSlider { position: relative; display: block; overflow: hidden; user-select: none; touch-action: pan-y; cursor: ew-resize; }
+.beforeAfterSlider { position: relative; display: block; overflow: visible; user-select: none; touch-action: pan-y; }
 .beforeAfterLayer { position: absolute; inset: 0; margin: 0; overflow: hidden; background: #554b44; }
 .beforeAfterLayer picture, .beforeAfterLayer img { display: block; width: 100%; height: 100%; }
-.beforeAfterLayer img { object-fit: cover; object-position: center 36%; pointer-events: none; }
+.beforeAfterLayer img { object-fit: cover; object-position: center; pointer-events: none; transition: transform .42s cubic-bezier(.2,.75,.25,1), filter .42s, box-shadow .42s; }
 .beforeAfterBefore img { filter: saturate(.8) brightness(.88); }
+.beforeAfterBefore { clip-path: inset(0 calc(100% - var(--reveal)) 0 0); }
 .beforeAfterAfter { z-index: 1; clip-path: inset(0 0 0 var(--reveal)); }
 .beforeAfterLayer figcaption { position: absolute; z-index: 3; top: 15px; padding: 8px 10px; color: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.28); background: rgba(18,15,13,.58); backdrop-filter: blur(8px); text-transform: uppercase; letter-spacing: .16em; font-size: 7px; }
 .beforeAfterBefore figcaption { left: 15px; }
 .beforeAfterAfter figcaption { right: 15px; color: #171512; border-color: rgba(23,21,18,.15); background: rgba(235,213,185,.9); }
 .beforeAfterDivider { position: absolute; z-index: 4; top: 0; bottom: 0; left: var(--reveal); width: 1px; background: rgba(255,255,255,.9); box-shadow: 0 0 18px rgba(0,0,0,.25); pointer-events: none; }
-.beforeAfterDivider > span { position: absolute; top: 50%; left: 50%; width: 42px; height: 42px; display: grid; place-items: center; transform: translate(-50%,-50%); color: #171512; border: 1px solid rgba(255,255,255,.75); border-radius: 50%; background: #e2bd8c; box-shadow: 0 8px 28px rgba(0,0,0,.25); }
-.beforeAfterRange { position: absolute; z-index: 5; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
-.beforeAfterRange:focus-visible + .beforeAfterHint { outline: 2px solid #fff; outline-offset: 4px; }
+.beforeAfterHandle { position: absolute; z-index: 7; top: 50%; left: var(--reveal); width: 46px; height: 46px; display: grid; place-items: center; padding: 0; transform: translate(-50%,-50%); color: #171512; border: 1px solid rgba(255,255,255,.78); border-radius: 50%; background: #e2bd8c; box-shadow: 0 8px 28px rgba(0,0,0,.3); cursor: grab; touch-action: none; transition: transform .22s, box-shadow .22s; }
+.beforeAfterHandle:hover { transform: translate(-50%,-50%) scale(1.08); box-shadow: 0 11px 34px rgba(0,0,0,.36); }
+.beforeAfterHandle:active { cursor: grabbing; transform: translate(-50%,-50%) scale(.96); }
+.beforeAfterHandle:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 .beforeAfterHint { position: absolute; z-index: 4; left: 50%; bottom: 15px; transform: translateX(-50%); padding: 7px 10px; color: rgba(255,255,255,.9); background: rgba(18,15,13,.58); backdrop-filter: blur(8px); text-transform: uppercase; letter-spacing: .13em; white-space: nowrap; font-size: 6px; pointer-events: none; transition: opacity .25s; }
 .beforeAfterSlider:hover .beforeAfterHint { opacity: .35; }
 .frontModelPhotos { position: absolute; inset: 0; display: block; }
-.frontModelPhotos .beforeAfterLayer img { object-position: 50% 32%; }
+.frontModelPhotos .beforeAfterLayer img { object-position: center; }
 .frontModelPhotos .beforeAfterLayer figcaption { top: 26px; }
 .frontModelNumber, .frontModelVertical { z-index: 6; pointer-events: none; }
 .backComparisonMedia { display: block; }
 .backComparisonCard:hover .beforeAfterLayer img { transform: none; }
+.beforeAfterSlider.isHovering-before .beforeAfterBefore { z-index: 3; clip-path: inset(-8px calc(100% - var(--reveal) - 2%) -8px -8px); }
+.beforeAfterSlider.isHovering-after .beforeAfterAfter { z-index: 3; clip-path: inset(-8px -8px -8px calc(var(--reveal) - 2%)); }
+.beforeAfterSlider.isHovering-before .beforeAfterBefore img, .beforeAfterSlider.isHovering-after .beforeAfterAfter img { transform: translateY(-7px) scale(1.012); filter: saturate(1) brightness(1.03); box-shadow: 0 20px 38px rgba(0,0,0,.32); }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.frontModelFeature { min-height: 0; }
+.frontModelFrame { aspect-ratio: 3 / 4; min-height: 0; }
+.backComparisonCard:nth-child(3), .backComparisonCard:nth-child(4) { grid-column: auto; display: block; }
+.backComparisonCard:nth-child(4) .backComparisonMedia, .backComparisonCard:nth-child(4) .backComparisonCaption { grid-column: auto; grid-row: auto; }
+.backComparisonMedia, .backComparisonCard:nth-child(n+3) .backComparisonMedia { aspect-ratio: 3 / 4; }
+.backComparisonCard:nth-child(n+3) .backComparisonCaption { border-top: 1px solid rgba(212,174,121,.25); align-items: center; justify-content: flex-start; flex-direction: row; }
+.backComparisonCard:nth-child(n+3) .backComparisonCaption > span { font-size: 24px; }
+.backComparisonCard:nth-child(n+3) .backComparisonCaption strong { font-size: 15px; }
+.backComparisonCard:nth-child(n+3) .backComparisonCaption small { max-width: none; margin-top: 4px; font-size: 6px; line-height: normal; }
+.resultsReveal { opacity: 0; transform: translateY(34px); transition: opacity .75s ease var(--reveal-delay, 0ms), transform .85s cubic-bezier(.2,.75,.25,1) var(--reveal-delay, 0ms); }
+.resultsReveal.isRevealed { opacity: 1; transform: translateY(0); }
 .backComparisonCaption { padding: 22px; display: flex; align-items: center; gap: 17px; border-top: 1px solid rgba(212,174,121,.25); }
-.backComparisonCard:nth-child(n+3) .backComparisonMedia { aspect-ratio: 2.2; }
+.backComparisonCard:nth-child(n+3) .backComparisonMedia { aspect-ratio: 3 / 4; }
 .backComparisonCard:nth-child(n+3) .backComparisonCaption { border-top: 0; align-items: flex-start; justify-content: center; flex-direction: column; }
 .backComparisonCard:nth-child(n+3) .backComparisonCaption > span { font-size: 34px; }
 .backComparisonCard:nth-child(n+3) .backComparisonCaption strong { font-size: clamp(22px, 2.2vw, 32px); }
@@ -393,7 +410,7 @@ button, input { font: inherit; }
   .transformationRail { grid-column: 1; grid-row: 3; border-right: 0; }
   .transformationDetails { grid-column: 1; grid-row: 4; }
   .frontModelFeature { grid-template-columns: 1fr; }
-  .frontModelFrame { min-height: 660px; border-right: 0; border-bottom: 1px solid rgba(212,174,121,.28); }
+  .frontModelFrame { min-height: 0; border-right: 0; border-bottom: 1px solid rgba(212,174,121,.28); }
   .frontModelCopy { min-height: 620px; }
   .backTransformationsHeader { grid-template-columns: 1fr; align-items: start; gap: 28px; }
   .backTransformationsHeader > p { max-width: 560px; }
@@ -458,7 +475,7 @@ button, input { font: inherit; }
   .transformationDetailsTitle h3 { font-size: 25px; }
   .transformationFeature li { font-size: 8px; }
   .frontModelFeature { border-left: 0; border-right: 0; }
-  .frontModelFrame { min-height: 560px; }
+  .frontModelFrame { min-height: 0; }
   .frontModelPhotos { grid-template-columns: 1fr 1fr; }
   .frontModelPhoto figcaption { top: 16px; left: 14px; }
   .frontModelCopy { min-height: 570px; padding: 48px 22px 38px; }
@@ -469,9 +486,9 @@ button, input { font: inherit; }
   .backComparisonGrid { grid-template-columns: 1fr; }
   .backComparisonCard:nth-child(3), .backComparisonCard:nth-child(4) { grid-column: auto; display: block; }
   .backComparisonCard:nth-child(4) .backComparisonMedia, .backComparisonCard:nth-child(4) .backComparisonCaption { grid-column: auto; grid-row: auto; }
-  .backComparisonCard:nth-child(n+3) .backComparisonMedia { aspect-ratio: 1; }
+  .backComparisonCard:nth-child(n+3) .backComparisonMedia { aspect-ratio: 3 / 4; }
   .backComparisonCard:nth-child(n+3) .backComparisonCaption { border-top: 1px solid rgba(212,174,121,.25); flex-direction: row; align-items: center; justify-content: flex-start; }
-  .backComparisonMedia { aspect-ratio: 1; }
+  .backComparisonMedia { aspect-ratio: 3 / 4; }
   .aboutVisual { min-height: 510px; }
   .aboutVisual > img { width: 90%; height: 465px; }
   .aboutBadge { width: 155px; padding: 17px; bottom: 20px; }
@@ -490,4 +507,5 @@ button, input { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .resultsReveal { opacity: 1; transform: none; }
 }
