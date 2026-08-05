@@ -35,6 +35,7 @@ type BeforeAfterSliderProps = {
 function BeforeAfterSlider({ before, after, title, className = "", eager = false }: BeforeAfterSliderProps) {
   const [reveal, setReveal] = useState(50);
   const [hoveredSide, setHoveredSide] = useState<"before" | "after" | null>(null);
+  const [lockedSide, setLockedSide] = useState<"before" | "after" | null>(null);
   const isDragging = useRef(false);
   const style = { "--reveal": `${reveal}%` } as CSSProperties;
 
@@ -58,20 +59,38 @@ function BeforeAfterSlider({ before, after, title, className = "", eager = false
 
   return (
     <div
-      className={`beforeAfterSlider ${hoveredSide ? `isHovering-${hoveredSide}` : ""} ${className}`}
+      className={`beforeAfterSlider ${hoveredSide ? `isHovering-${hoveredSide}` : ""} ${lockedSide ? `isLocked-${lockedSide}` : ""} ${className}`}
       style={style}
       onPointerMove={(event) => {
-        if (isDragging.current) return;
+        if (isDragging.current || lockedSide) return;
         const rect = event.currentTarget.getBoundingClientRect();
         setHoveredSide(event.clientX - rect.left < rect.width * (reveal / 100) ? "before" : "after");
       }}
       onPointerLeave={() => setHoveredSide(null)}
     >
-      <figure className="beforeAfterLayer beforeAfterBefore">
+      <figure
+        className="beforeAfterLayer beforeAfterBefore"
+        role="button"
+        tabIndex={lockedSide === "after" ? -1 : 0}
+        aria-label={`${lockedSide === "before" ? "Voltar à comparação" : "Ver foto Antes inteira"} — ${title}`}
+        onClick={() => setLockedSide((side) => side === "before" ? null : "before")}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") setLockedSide((side) => side === "before" ? null : "before");
+        }}
+      >
         <SalonPhoto name={before} alt={`Antes — ${title}`} eager={eager} />
         <figcaption>Antes</figcaption>
       </figure>
-      <figure className="beforeAfterLayer beforeAfterAfter">
+      <figure
+        className="beforeAfterLayer beforeAfterAfter"
+        role="button"
+        tabIndex={lockedSide === "before" ? -1 : 0}
+        aria-label={`${lockedSide === "after" ? "Voltar à comparação" : "Ver foto Depois inteira"} — ${title}`}
+        onClick={() => setLockedSide((side) => side === "after" ? null : "after")}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") setLockedSide((side) => side === "after" ? null : "after");
+        }}
+      >
         <SalonPhoto name={after} alt={`Depois — ${title}`} eager={eager} />
         <figcaption>Depois</figcaption>
       </figure>
@@ -96,7 +115,7 @@ function BeforeAfterSlider({ before, after, title, className = "", eager = false
         <ArrowLeftRight size={16} strokeWidth={1.5} />
         <span className="srOnly">Arraste para comparar</span>
       </button>
-      <span className="beforeAfterHint" aria-hidden="true">Arraste para comparar</span>
+      <span className="beforeAfterHint" aria-hidden="true">{lockedSide ? "Clique para voltar" : "Clique na foto ou arraste a bolinha"}</span>
     </div>
   );
 }
