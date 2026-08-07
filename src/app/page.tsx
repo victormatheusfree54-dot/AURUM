@@ -11,37 +11,6 @@ import { InstagramIcon } from "@/components/InstagramIcon";
 import { ResultsShowcase } from "@/components/ResultsShowcase";
 import { ScrollRevealController } from "@/components/ScrollRevealController";
 
-const services = [
-  {
-    number: "01",
-    title: "Mega Hair",
-    subtitle: "European Luxury Hair",
-    text: "Alongamentos com acabamento natural, escolha personalizada de cor, volume e comprimento.",
-    className: "serviceTall",
-  },
-  {
-    number: "02",
-    title: "Cabelos",
-    subtitle: "Cor, corte e tratamento",
-    text: "Técnicas atuais e um cuidado pensado para valorizar a sua identidade.",
-    className: "",
-  },
-  {
-    number: "03",
-    title: "Unhas",
-    subtitle: "Manicure e nail design",
-    text: "Do essencial ao sofisticado, com atenção aos detalhes e ao seu estilo.",
-    className: "",
-  },
-  {
-    number: "04",
-    title: "Estética",
-    subtitle: "Cuidado completo",
-    text: "Protocolos de beleza em um ambiente acolhedor para você se cuidar por inteiro.",
-    className: "serviceWide",
-  },
-];
-
 const reviews = [
   {
     name: "Michele Baima",
@@ -151,35 +120,6 @@ export default function Home() {
           <span><strong>5,0</strong> no Google</span>
           <span><strong>4</strong> áreas de cuidado</span>
           <span><strong>1</strong> experiência completa</span>
-        </div>
-      </section>
-
-      <section className="section servicesSection" id="servicos">
-        <div className="sectionHeading">
-          <div>
-            <p className="eyebrow"><span /> Nossos serviços</p>
-            <h2>Tudo o que você precisa,<br /><em>em um só lugar.</em></h2>
-          </div>
-          <p>
-            Uma experiência completa de beleza, do mega hair à estética, com atendimento próximo
-            e atenção a cada detalhe.
-          </p>
-        </div>
-
-        <div className="servicesGrid">
-          {services.map((service) => (
-            <article className={`serviceCard ${service.className}`} key={service.number}>
-              <div className="servicePhotoPlaceholder" aria-hidden="true"><span>0{service.number}</span></div>
-              <div className="serviceOverlay" />
-              <span className="serviceNumber">{service.number}</span>
-              <div className="serviceContent">
-                <span>{service.subtitle}</span>
-                <h3>{service.title}</h3>
-                <p>{service.text}</p>
-              </div>
-              <span className="serviceArrow"><ArrowRight size={18} /></span>
-            </article>
-          ))}
         </div>
       </section>
 

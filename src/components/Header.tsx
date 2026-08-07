@@ -6,7 +6,6 @@ import { InstagramIcon } from "@/components/InstagramIcon";
 
 const navigation = [
   { label: "Início", href: "#inicio" },
-  { label: "Serviços", href: "#servicos" },
   { label: "Resultados", href: "#resultados" },
   { label: "Avaliações", href: "#avaliacoes" },
   { label: "Contato", href: "#contato" },
