@@ -27,6 +27,18 @@ As fotos atuais são demonstrativas e vêm do Unsplash. O efeito mais escuro apl
 
 O Instagram e o endereço já estão configurados. Quando houver telefone/WhatsApp e horário oficial, adicione essas informações em `src/app/page.tsx`.
 
+## SEO e endereço público
+
+O projeto já inclui title e metatags, Open Graph/Twitter Preview, favicon, JSON-LD do salão, `robots.txt`, `sitemap.xml` e `llms.txt`.
+
+Em desenvolvimento, as URLs usam `http://localhost:3000`. Antes de publicar, copie `.env.example` para `.env.local` (ou configure a variável na hospedagem) e troque pelo domínio definitivo:
+
+```env
+NEXT_PUBLIC_SITE_URL=https://www.seudominio.com.br
+```
+
+Depois gere uma nova versão com `npm run build`. Assim, canonical, Open Graph, JSON-LD, sitemap e robots passam a usar o domínio correto automaticamente.
+
 ## Gerar versão final
 
 Execute `npm run build`. O pacote de produção compatível com a hospedagem será criado na pasta `dist`.

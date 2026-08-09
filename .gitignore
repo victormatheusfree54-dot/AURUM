@@ -1,8 +1,10 @@
 node_modules/
 .next/
+.vinext/
 out/
 dist/
 .wrangler/
+.codex-logs/
 vercel-static.html
 *.log
 .DS_Store

@@ -10,6 +10,7 @@ import { Header } from "@/components/Header";
 import { InstagramIcon } from "@/components/InstagramIcon";
 import { ResultsShowcase } from "@/components/ResultsShowcase";
 import { ScrollRevealController } from "@/components/ScrollRevealController";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 
 const reviews = [
   {
@@ -29,35 +30,101 @@ const reviews = [
   },
 ];
 
-export default function Home() {
-  const mapsUrl =
-    "https://www.google.com/maps/search/?api=1&query=Av.%20das%20Am%C3%A9ricas%2C%2019020%20-%20Recreio%20dos%20Bandeirantes%2C%20Rio%20de%20Janeiro";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": absoluteUrl("/#website"),
+      url: absoluteUrl("/"),
+      name: siteConfig.name,
+      description: siteConfig.description,
+      inLanguage: siteConfig.language,
+      publisher: { "@id": absoluteUrl("/#beauty-salon") },
+    },
+    {
+      "@type": "BeautySalon",
+      "@id": absoluteUrl("/#beauty-salon"),
+      name: siteConfig.legalName,
+      alternateName: siteConfig.name,
+      url: absoluteUrl("/"),
+      description: siteConfig.description,
+      image: [
+        absoluteUrl("/images/salao-aurum-recreio.jpeg"),
+        absoluteUrl("/images/aurum-logo.webp"),
+        absoluteUrl("/images/modelo-frente-depois.webp"),
+      ],
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/images/aurum-logo.webp"),
+        width: 900,
+        height: 502,
+      },
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: siteConfig.address.streetAddress,
+        addressLocality: siteConfig.address.addressLocality,
+        addressRegion: siteConfig.address.addressRegion,
+        postalCode: siteConfig.address.postalCode,
+        addressCountry: siteConfig.address.addressCountry,
+      },
+      areaServed: {
+        "@type": "Place",
+        name: `${siteConfig.address.neighborhood}, Rio de Janeiro`,
+      },
+      sameAs: [siteConfig.instagram],
+      hasMap: siteConfig.maps,
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: 5,
+        reviewCount: 3,
+        bestRating: 5,
+        worstRating: 1,
+      },
+      review: reviews.map((review) => ({
+        "@type": "Review",
+        author: {
+          "@type": "Person",
+          name: review.name,
+        },
+        reviewBody: review.text,
+        reviewRating: {
+          "@type": "Rating",
+          ratingValue: 5,
+          bestRating: 5,
+          worstRating: 1,
+        },
+      })),
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Serviços de beleza",
+        itemListElement: [
+          "Mega hair e alongamentos",
+          "Cor, corte e tratamentos capilares",
+          "Manicure e nail design",
+          "Estética e cuidados de beleza",
+        ].map((name) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name,
+          },
+        })),
+      },
+    },
+  ],
+};
 
-  const localBusinessData = {
-    "@context": "https://schema.org",
-    "@type": "BeautySalon",
-    name: "Salão Aurum Beauty Concept",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Av. das Américas, 19020",
-      addressLocality: "Rio de Janeiro",
-      addressRegion: "RJ",
-      postalCode: "22790-704",
-      addressCountry: "BR",
-    },
-    sameAs: ["https://www.instagram.com/aurumbeautyconcept/"],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "3",
-    },
-  };
+const safeStructuredData = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+
+export default function Home() {
+  const mapsUrl = siteConfig.maps;
 
   return (
     <main>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessData) }}
+        dangerouslySetInnerHTML={{ __html: safeStructuredData }}
       />
       <Header />
       <ScrollRevealController />
