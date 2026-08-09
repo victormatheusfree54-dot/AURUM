@@ -9,6 +9,7 @@ import {
 import { Header } from "@/components/Header";
 import { InstagramIcon } from "@/components/InstagramIcon";
 import { ResultsShowcase } from "@/components/ResultsShowcase";
+import { SalonDeck } from "@/components/SalonDeck";
 import { ScrollRevealController } from "@/components/ScrollRevealController";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
@@ -196,33 +197,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section aboutSection">
-        <div className="aboutVisual">
-          <div className="photoPlaceholder aboutPhotoPlaceholder" aria-label="Espaço reservado para uma nova foto do salão">
-            <span>Nova imagem do espaço</span>
-            <small>Aurum Beauty Concept</small>
-          </div>
-          <div className="aboutBadge">
-            <span>01</span>
-            <p>Espaço pensado para você</p>
-          </div>
-        </div>
-        <div className="aboutCopy">
-          <p className="eyebrow"><span /> Sobre a Aurum</p>
-          <h2>Mais que um salão.<br /><em>Um encontro entre amigas.</em></h2>
-          <p>
-            Na Aurum, cada atendimento é feito para você se sentir acolhida. Um espaço completo,
-            com especialistas em beleza e uma atmosfera leve, elegante e próxima.
-          </p>
-          <blockquote>
-            “Eu estou extremamente chocada com a estrutura e o tratamento com as clientes! Já
-            conquistaram meu coração!”
-          </blockquote>
-          <a className="button buttonOutline" href="#contato">
-            Conheça nosso espaço <ArrowRight size={18} />
-          </a>
-        </div>
-      </section>
+      <SalonDeck />
 
       <section className="reviewsSection" id="avaliacoes">
         <div className="section">
