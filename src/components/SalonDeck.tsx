@@ -23,12 +23,6 @@ const salonPhotos = [
     detail: "Seu momento de cuidado",
   },
   {
-    src: "/images/salao-hall-lateral.jpeg",
-    alt: "Ambiente interno da Aurum Beauty Concept com logo dourada",
-    title: "Arquitetura & beleza",
-    detail: "Um espaço feito para você",
-  },
-  {
     src: "/images/salao-estacoes-beleza.jpeg",
     alt: "Estações de cabelo da Aurum Beauty Concept com espelhos iluminados",
     title: "Estações de beleza",
@@ -36,7 +30,7 @@ const salonPhotos = [
   },
 ];
 
-const cardRotations = [-4.5, 3.4, -2.8, 4.2, -1.8];
+const cardRotations = [-4.5, 3.4, -2.8, 2.2];
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max);
