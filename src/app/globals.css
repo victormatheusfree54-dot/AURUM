@@ -1419,7 +1419,8 @@ main { overflow: clip; }
   }
 
   .ownerPortraitFrame img {
-    object-position: 52% 14%;
+    /* Em notebooks mais baixos, prioriza o rosto e evita cortar a testa. */
+    object-position: 52% 3%;
   }
 }
 
