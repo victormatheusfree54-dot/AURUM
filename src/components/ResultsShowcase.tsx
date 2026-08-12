@@ -1,8 +1,9 @@
 "use client";
 
-import { ArrowLeftRight, ArrowRight } from "lucide-react";
+import { ArrowLeftRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import DepthCarousel, { type DepthCarouselItem } from "./DepthCarousel";
+import { StarButton } from "./StarButton";
 
 const photoPlaceholder =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1607' viewBox='0 0 1200 1607'%3E%3Crect width='1200' height='1607' fill='%23554b44'/%3E%3C/svg%3E";
@@ -193,12 +194,12 @@ const transformations: DepthCarouselItem[] = [
     tags: ["Coloração", "Iluminação", "Tonalização"],
   },
   {
-    id: "corte-camadas",
+    id: "mega-hair",
     before: "transformacao-2-antes",
     after: "transformacao-2-depois",
-    title: "Corte em camadas",
-    detail: "Mais comprimento, balanço e movimento natural para os fios.",
-    tags: ["Corte Editorial", "Balanço"],
+    title: "Mega Hair",
+    detail: "Mais comprimento, volume e movimento natural para os fios.",
+    tags: ["Mega Hair", "Volume"],
   },
   {
     id: "recuperacao-fios",
@@ -293,9 +294,9 @@ export function ResultsShowcase() {
             )}
 
             <div className="resultsCtaWrap">
-              <a href="#contato" className="button buttonGold">
-                Quero viver minha transformação <ArrowRight size={17} aria-hidden="true" />
-              </a>
+              <StarButton href="#contato">
+                Quero viver minha transformação
+              </StarButton>
             </div>
           </div>
         </div>

@@ -93,6 +93,7 @@ export default function DepthCarousel({
   } | null>(null);
 
   const wheelTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const wheelLockRef = useRef(false);
   const autoTimerRef = useRef<number | null>(null);
   const reducedRef = useRef(false);
 
@@ -241,22 +242,26 @@ export default function DepthCarousel({
       // Only scroll carousel if not interacting with an active slider inside
       if ((e.target as HTMLElement)?.closest(".beforeAfterHandle")) return;
 
-      e.preventDefault();
-      tweenRef.current?.kill();
       const raw = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      const delta = e.deltaMode === 1 ? raw * 24 : raw;
-      const step = clamp(delta / (cfg.cardWidth * 0.9), -0.6, 0.6);
-      posRef.current += step;
-      layout(posRef.current);
+      if (Math.abs(raw) < 8) return;
+
+      e.preventDefault();
+      if (wheelLockRef.current) return;
+
+      wheelLockRef.current = true;
+      navigateBy(raw > 0 ? 1 : -1);
       if (wheelTimerRef.current) clearTimeout(wheelTimerRef.current);
-      wheelTimerRef.current = setTimeout(() => setFocus(Math.round(posRef.current), true), 130);
+      wheelTimerRef.current = setTimeout(() => {
+        wheelLockRef.current = false;
+      }, Math.max(360, cfg.duration * 0.72));
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       el.removeEventListener("wheel", onWheel);
       if (wheelTimerRef.current) clearTimeout(wheelTimerRef.current);
+      wheelLockRef.current = false;
     };
-  }, [layout, setFocus]);
+  }, [navigateBy]);
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     const cfg = cfgRef.current;

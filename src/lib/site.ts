@@ -11,8 +11,7 @@ export const siteConfig = {
   locale: "pt_BR",
   language: "pt-BR",
   instagram: "https://www.instagram.com/aurumbeautyconcept/",
-  maps:
-    "https://www.google.com/maps/search/?api=1&query=Av.%20das%20Am%C3%A9ricas%2C%2019020%20-%20Recreio%20dos%20Bandeirantes%2C%20Rio%20de%20Janeiro",
+  maps: "https://maps.app.goo.gl/2z6yN5c4Kuccksm46",
   address: {
     streetAddress: "Av. das Américas, 19020",
     addressLocality: "Rio de Janeiro",
