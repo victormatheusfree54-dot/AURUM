@@ -1,11 +1,4 @@
-import {
-  ArrowDownRight,
-  ArrowRight,
-  MapPin,
-  Quote,
-  Sparkles,
-  Star,
-} from "lucide-react";
+import { ArrowRight, MapPin, Star } from "lucide-react";
 import { Header } from "@/components/Header";
 import { InstagramIcon } from "@/components/InstagramIcon";
 import { ResultsShowcase } from "@/components/ResultsShowcase";
@@ -51,7 +44,7 @@ const structuredData = {
       url: absoluteUrl("/"),
       description: siteConfig.description,
       image: [
-        absoluteUrl("/images/salao-aurum-recreio.jpeg"),
+        absoluteUrl("/images/salao-aurum-recreio.webp"),
         absoluteUrl("/images/aurum-logo.webp"),
         absoluteUrl("/images/modelo-frente-depois.webp"),
       ],
@@ -84,10 +77,7 @@ const structuredData = {
       },
       review: reviews.map((review) => ({
         "@type": "Review",
-        author: {
-          "@type": "Person",
-          name: review.name,
-        },
+        author: { "@type": "Person", name: review.name },
         reviewBody: review.text,
         reviewRating: {
           "@type": "Rating",
@@ -106,10 +96,7 @@ const structuredData = {
           "Estética e cuidados de beleza",
         ].map((name) => ({
           "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name,
-          },
+          itemOffered: { "@type": "Service", name },
         })),
       },
     },
@@ -117,6 +104,21 @@ const structuredData = {
 };
 
 const safeStructuredData = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+
+function Stars({ labelled = false }: { labelled?: boolean }) {
+  return (
+    <span
+      className="ratingStars"
+      role={labelled ? "img" : undefined}
+      aria-label={labelled ? "5 de 5 estrelas" : undefined}
+      aria-hidden={labelled ? undefined : true}
+    >
+      {Array.from({ length: 5 }).map((_, index) => (
+        <Star key={index} size={14} fill="currentColor" aria-hidden="true" />
+      ))}
+    </span>
+  );
+}
 
 export default function Home() {
   const mapsUrl = siteConfig.maps;
@@ -132,169 +134,183 @@ export default function Home() {
 
       <section className="hero" id="inicio">
         <div className="heroCopy">
-          <p className="eyebrow">
-            <span /> Aurum Beauty Concept
-          </p>
           <h1>
-            Beleza que revela
-            <em> a sua melhor versão.</em>
+            Sua beleza,
+            <em> do seu jeito.</em>
           </h1>
           <p className="heroText">
-            Mega hair, cabelos, unhas e estética em um espaço feito para transformar o seu momento
-            de cuidado em uma experiência inesquecível.
+            Mega hair, cabelos, unhas e estética em uma experiência pensada para
+            você se reconhecer ainda mais bonita.
           </p>
           <div className="heroActions">
             <a className="button buttonDark" href="#resultados">
-              Conheça os resultados <ArrowDownRight size={18} />
+              Ver transformações <ArrowRight size={17} aria-hidden="true" />
             </a>
             <a
               className="textLink"
-              href="https://www.instagram.com/aurumbeautyconcept/"
+              href={siteConfig.instagram}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
-              <InstagramIcon size={17} /> @aurumbeautyconcept
+              <InstagramIcon size={17} aria-hidden="true" /> @aurumbeautyconcept
             </a>
           </div>
-        </div>
-
-        <div className="heroVisual">
-          <div className="heroFrame">
-            <div className="photoPlaceholder heroPhotoPlaceholder" aria-label="Espaço reservado para a nova foto principal">
-              <span>Nova imagem principal</span>
-              <small>Modelo de frente</small>
-            </div>
-            <span className="verticalWord">AURUM</span>
-          </div>
-          <div className="ratingCard">
-            <div className="ratingStars" aria-label="5 de 5 estrelas">
-              {Array.from({ length: 5 }).map((_, index) => (
-                <Star key={index} size={14} fill="currentColor" />
-              ))}
-            </div>
+          <div className="heroProof">
+            <Stars labelled />
             <strong>5,0</strong>
-            <span>Experiência avaliada no Google</span>
-          </div>
-          <div className="heroSeal" aria-hidden="true">
-            <Sparkles size={18} />
-            <span>Beauty<br />Concept</span>
+            <span>avaliado por mulheres no Google</span>
           </div>
         </div>
-      </section>
 
-      <section className="trustStrip" aria-label="Destaques">
-        <p>Um salão. Todas as suas versões.</p>
-        <div>
-          <span><strong>5,0</strong> no Google</span>
-          <span><strong>4</strong> áreas de cuidado</span>
-          <span><strong>1</strong> experiência completa</span>
-        </div>
+        <div className="heroMedia heroMediaPlaceholder" aria-hidden="true" />
       </section>
 
       <section className="resultsSection" id="resultados">
-        <div className="section resultsInner">
-          <ResultsShowcase />
-        </div>
+        <ResultsShowcase />
       </section>
 
       <SalonDeck />
 
+      <div className="closingShell">
       <section className="reviewsSection" id="avaliacoes">
-        <div className="section">
-          <div className="reviewsHeader">
-            <div>
-              <p className="eyebrow"><span /> Avaliações</p>
-              <h2>Experiências <em>que ficam.</em></h2>
-            </div>
+        <div className="section reviewsEditorial">
+          <header className="reviewsEditorialHeader">
+            <h2>Experiências <em>que ficam.</em></h2>
             <div className="reviewScore">
               <strong>5,0</strong>
-              <div>
-                <span>{Array.from({ length: 5 }).map((_, index) => <Star key={index} size={14} fill="currentColor" />)}</span>
-                <small>3 avaliações no Google</small>
-              </div>
+              <Stars labelled />
+              <small>no Google · 3 avaliações</small>
             </div>
-          </div>
+          </header>
 
-          <div className="reviewsGrid">
-            {reviews.map((review, index) => (
-              <article className="reviewCard" key={review.name}>
-                <Quote size={34} strokeWidth={1.1} />
-                <div className="ratingStars" aria-hidden="true">
-                  {Array.from({ length: 5 }).map((_, starIndex) => (
-                    <Star key={starIndex} size={13} fill="currentColor" />
-                  ))}
-                </div>
-                <p>“{review.text}”</p>
-                <footer>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <div><strong>{review.name}</strong><small>{review.time}</small></div>
-                </footer>
-              </article>
-            ))}
+          <div className="reviewsEditorialBody">
+            <blockquote className="reviewLead">
+              <p>“{reviews[0].text}”</p>
+              <cite>
+                <strong>— {reviews[0].name}</strong>
+              </cite>
+            </blockquote>
+
+            <div className="reviewSecondary">
+              {[reviews[1], reviews[2]].map((review) => (
+                <blockquote key={review.name}>
+                  <p>“{review.text}”</p>
+                  <cite>
+                    <strong>— {review.name}</strong>
+                  </cite>
+                </blockquote>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section locationSection" id="contato">
-        <div className="locationCopy">
-          <p className="eyebrow"><span /> Venha nos conhecer</p>
-          <h2>Seu próximo momento<br /><em>começa aqui.</em></h2>
-          <div className="addressBlock">
-            <MapPin size={22} />
+      <section
+        className="contactSection"
+        id="contato"
+        aria-label="Seu próximo momento começa aqui. Aurum Beauty Concept, Avenida das Américas, 19020."
+      >
+        <div className="contactMedia">
+          <picture className="contactWideMedia">
+            <img
+              src="/images/salao-banner-ultrawide-sharp.webp"
+              alt="Vista panorâmica do salão Aurum Beauty Concept"
+              width={2156}
+              height={678}
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <picture className="contactMobileMedia" aria-hidden="true">
+            <source
+              srcSet="/images/salao-hall-principal-480.webp 480w, /images/salao-hall-principal-720.webp 720w, /images/salao-hall-principal.webp 1200w"
+              sizes="100vw"
+              type="image/webp"
+            />
+            <img
+              src="/images/salao-hall-principal.webp"
+              alt=""
+              width={1200}
+              height={1600}
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </div>
+
+        <address className="contactDesktopAddress">
+          <MapPin size={22} aria-hidden="true" />
+          <p>
+            <strong>Av. das Américas, 19020</strong>
+            Recreio dos Bandeirantes<br />Rio de Janeiro — RJ, 22790-704
+          </p>
+        </address>
+
+        <div className="contactHotspots">
+          <a className="contactHotspotMaps" href={mapsUrl} target="_blank" rel="noopener noreferrer">
+            Como chegar <ArrowRight size={18} aria-hidden="true" />
+          </a>
+          <a className="contactHotspotInstagram" href={siteConfig.instagram} target="_blank" rel="noopener noreferrer">
+            Agendar pelo Instagram
+          </a>
+        </div>
+
+        <div className="contactCopy">
+          <h2>Seu próximo momento <em>começa aqui.</em></h2>
+          <address className="addressBlock">
+            <MapPin size={21} aria-hidden="true" />
             <p>
               <strong>Av. das Américas, 19020</strong>
               Recreio dos Bandeirantes<br />Rio de Janeiro — RJ, 22790-704
             </p>
-          </div>
-          <div className="locationActions">
-            <a className="button buttonDark" href={mapsUrl} target="_blank" rel="noreferrer">
-              Como chegar <ArrowRight size={18} />
+          </address>
+          <div className="contactActions">
+            <a className="button buttonGold" href={mapsUrl} target="_blank" rel="noopener noreferrer">
+              Como chegar <ArrowRight size={17} aria-hidden="true" />
             </a>
-            <a
-              className="button buttonOutline"
-              href="https://www.instagram.com/aurumbeautyconcept/"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a className="button buttonOutlineLight" href={siteConfig.instagram} target="_blank" rel="noopener noreferrer">
               Agendar pelo Instagram
             </a>
           </div>
         </div>
-
-        <a className="mapCard" href={mapsUrl} target="_blank" rel="noreferrer" aria-label="Abrir endereço no Google Maps">
-          <span className="mapRoad mapRoadOne" />
-          <span className="mapRoad mapRoadTwo" />
-          <span className="mapRoad mapRoadThree" />
-          <div className="mapPin"><MapPin size={27} fill="currentColor" /></div>
-          <div className="mapAddress">
-            <small>AURUM BEAUTY CONCEPT</small>
-            <strong>Av. das Américas, 19020</strong>
-            <span>Recreio dos Bandeirantes</span>
-          </div>
-          <div className="mapDirection">Abrir no Google Maps <ArrowRight size={16} /></div>
-        </a>
       </section>
 
       <footer className="footer">
         <div className="footerTop">
-          <div className="footerBrand">
-            <span>AURUM</span>
-            <small>Beauty Concept</small>
-          </div>
-          <p>European Luxury Hair<br />Mega Hair & Beleza Completa</p>
-          <a
-            href="https://www.instagram.com/aurumbeautyconcept/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <InstagramIcon size={18} /> @aurumbeautyconcept
+          <a className="footerBrand" href="#inicio" aria-label="Voltar ao início">
+            <picture>
+              <source srcSet="/images/aurum-logo.avif" type="image/avif" />
+              <img
+                src="/images/aurum-logo.webp"
+                alt="Aurum Beauty Concept"
+                width={900}
+                height={502}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           </a>
+          <nav aria-label="Links do rodapé">
+            <a href="#inicio">Início</a>
+            <a href="#resultados">Transformações</a>
+            <a href="#espaco">O espaço</a>
+            <a href="#avaliacoes">Avaliações</a>
+            <a href="#contato">Contato</a>
+          </nav>
+          <div className="footerSocials">
+            <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram da Aurum Beauty Concept">
+              <InstagramIcon size={24} aria-hidden="true" />
+            </a>
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Localização da Aurum Beauty Concept">
+              <MapPin size={24} aria-hidden="true" />
+            </a>
+          </div>
         </div>
         <div className="footerBottom">
-          <span>© {new Date().getFullYear()} Aurum Beauty Concept</span>
-          <span>Recreio dos Bandeirantes · Rio de Janeiro</span>
+          <span>© {new Date().getFullYear()} Aurum Beauty Concept. Todos os direitos reservados.</span>
         </div>
       </footer>
+      </div>
     </main>
   );
 }

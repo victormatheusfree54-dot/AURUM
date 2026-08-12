@@ -4,7 +4,9 @@ import vinext from "vinext";
 
 export default defineConfig({
   plugins: [
-    vinext(),
+    vinext({
+      precompress: true,
+    }),
     cloudflare({
       viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
     }),

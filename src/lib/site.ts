@@ -1,6 +1,6 @@
 const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
-export const siteUrl = new URL(configuredSiteUrl || "http://localhost:3000");
+export const siteUrl = new URL(configuredSiteUrl || "https://aurum-beauty-concept.vercel.app");
 
 export const siteConfig = {
   name: "Aurum Beauty Concept",

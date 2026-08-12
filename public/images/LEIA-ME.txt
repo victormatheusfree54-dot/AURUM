@@ -1,15 +1,10 @@
 IMAGENS DO SITE
 ===============
 
-Para trocar as fotos sem mexer no codigo, mantenha estes nomes:
+As fotos de conteúdo usam variantes responsivas para baixar somente o tamanho necessário:
 
-- hero.jpg: foto principal da capa
-- hair-detail.jpg: foto do card Mega Hair
-- nails.jpg: foto do card Unhas
-- interior.jpg: foto do card Estetica
-- salon.jpg: foto da secao Sobre
-- before-1.jpg e after-1.jpg: primeiro comparador
-- before-2.jpg e after-2.jpg: segundo comparador
+- Transformações: AVIF e WebP em 480, 720 e 1200 px.
+- Ambientes do salão: WebP em 480, 720 e 1200 px.
+- Compartilhamento: /og-image.webp em 1200x630 px.
 
-Use fotos JPG ou PNG, preferencialmente verticais e com pelo menos 1200 px de altura.
-Depois de substituir, rode "npm run build" novamente.
+Mantenha os nomes existentes e não substitua uma variante isoladamente. Gere todos os tamanhos do mesmo conjunto para que o navegador escolha corretamente a imagem mais leve.

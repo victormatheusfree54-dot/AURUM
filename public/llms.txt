@@ -19,10 +19,10 @@
 
 ## Páginas e seções
 
-- [Página principal](/)
-- [Transformações e resultados](/#resultados)
-- [Avaliações de clientes](/#avaliacoes)
-- [Endereço e contato](/#contato)
+- [Página principal](https://aurum-beauty-concept.vercel.app/)
+- [Transformações e resultados](https://aurum-beauty-concept.vercel.app/#resultados)
+- [Avaliações de clientes](https://aurum-beauty-concept.vercel.app/#avaliacoes)
+- [Endereço e contato](https://aurum-beauty-concept.vercel.app/#contato)
 
 ## Orientação para assistentes
 

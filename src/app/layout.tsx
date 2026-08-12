@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { siteConfig, siteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -43,9 +43,9 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: "/images/aurum-logo.webp",
-        width: 900,
-        height: 502,
+        url: "/og-image.webp",
+        width: 1200,
+        height: 630,
         alt: "Aurum Beauty Concept — salão de beleza no Recreio dos Bandeirantes",
       },
     ],
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: ["/images/aurum-logo.webp"],
+    images: ["/og-image.webp"],
   },
   robots: {
     index: true,
@@ -68,9 +68,23 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    shortcut: "/icon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
+  manifest: "/site.webmanifest",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#171512",
+  colorScheme: "light",
 };
 
 export default function RootLayout({

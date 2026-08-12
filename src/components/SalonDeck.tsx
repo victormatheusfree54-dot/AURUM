@@ -1,177 +1,81 @@
 "use client";
 
-import { ArrowDown, Sparkles } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { ArrowRight } from "lucide-react";
+import { useState } from "react";
 
 const salonPhotos = [
   {
-    src: "/images/salao-hall-principal.jpeg",
+    src: "/images/salao-hall-principal.webp",
     alt: "Hall principal da Aurum Beauty Concept com logo iluminada e poltronas",
     title: "Hall principal",
-    detail: "Elegância desde a chegada",
   },
   {
-    src: "/images/salao-aurum-recreio.jpeg",
+    src: "/images/salao-aurum-recreio.webp",
     alt: "Recepção da Aurum Beauty Concept no Recreio dos Bandeirantes",
     title: "Recepção Aurum",
-    detail: "Acolhimento em cada detalhe",
   },
   {
-    src: "/images/salao-nail-design.jpeg",
+    src: "/images/salao-nail-design.webp",
     alt: "Espaço de manicure e nail design da Aurum Beauty Concept",
     title: "Nail experience",
-    detail: "Seu momento de cuidado",
   },
   {
-    src: "/images/salao-estacoes-beleza.jpeg",
+    src: "/images/salao-estacoes-beleza.webp",
     alt: "Estações de cabelo da Aurum Beauty Concept com espelhos iluminados",
     title: "Estações de beleza",
-    detail: "Conforto para se transformar",
   },
 ];
 
-const cardRotations = [-4.5, 3.4, -2.8, 2.2];
-
-function clamp(value: number, min = 0, max = 1) {
-  return Math.min(Math.max(value, min), max);
-}
-
-function easeInOutCubic(value: number) {
-  return value < 0.5 ? 4 * value * value * value : 1 - Math.pow(-2 * value + 2, 3) / 2;
-}
-
 export function SalonDeck() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const cardRefs = useRef<Array<HTMLElement | null>>([]);
-  const counterRef = useRef<HTMLSpanElement>(null);
-  const progressRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const cards = cardRefs.current.filter((card): card is HTMLElement => card !== null);
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    if (!section || cards.length === 0 || reducedMotion.matches) return;
-
-    let animationFrame = 0;
-
-    const updateDeck = () => {
-      animationFrame = 0;
-
-      const rect = section.getBoundingClientRect();
-      const scrollDistance = Math.max(section.offsetHeight - window.innerHeight, 1);
-      const progress = clamp(-rect.top / scrollDistance);
-      const easedProgress = easeInOutCubic(progress);
-      const viewportWidth = window.innerWidth;
-      const cardWidth = cards[0].offsetWidth;
-      const cardStep = cardWidth * (viewportWidth <= 560 ? 0.76 : 0.7);
-      const startX = viewportWidth * 0.5 - cardWidth * 0.5;
-      const endX = startX - cardStep * (cards.length - 1);
-      const deckX = startX + (endX - startX) * easedProgress;
-
-      let activeIndex = 0;
-      let closestDistance = Number.POSITIVE_INFINITY;
-
-      cards.forEach((card, index) => {
-        const cardCenter = deckX + cardStep * index + cardWidth * 0.5;
-        const distanceFromCenter = Math.abs(cardCenter - viewportWidth * 0.5);
-        const focus = clamp(1 - distanceFromCenter / Math.max(viewportWidth * 0.62, cardWidth));
-        const rotation = cardRotations[index] * (1 - focus * 0.82);
-        const scale = 0.9 + focus * 0.1;
-        const lift = 22 - focus * 38;
-
-        if (distanceFromCenter < closestDistance) {
-          closestDistance = distanceFromCenter;
-          activeIndex = index;
-        }
-
-        card.style.opacity = `${0.5 + focus * 0.5}`;
-        card.style.zIndex = `${20 + Math.round(focus * 80)}`;
-        card.style.transform = `translate3d(${deckX + cardStep * index}px, calc(-50% + ${lift}px), 0) rotate(${rotation}deg) scale(${scale})`;
-        card.dataset.active = focus > 0.78 ? "true" : "false";
-      });
-
-      if (counterRef.current) {
-        counterRef.current.textContent = String(activeIndex + 1).padStart(2, "0");
-      }
-
-      if (progressRef.current) {
-        progressRef.current.style.transform = `scaleX(${progress})`;
-      }
-    };
-
-    const requestUpdate = () => {
-      if (!animationFrame) animationFrame = window.requestAnimationFrame(updateDeck);
-    };
-
-    const resizeObserver = new ResizeObserver(requestUpdate);
-    resizeObserver.observe(section);
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-    updateDeck();
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      if (animationFrame) window.cancelAnimationFrame(animationFrame);
-    };
-  }, []);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section className="salonDeckSection" id="espaco" ref={sectionRef}>
+    <section className="salonDeckSection" id="espaco">
       <div className="salonDeckSticky">
-        <div className="salonDeckGlow" aria-hidden="true" />
-        <span className="salonDeckWatermark" aria-hidden="true">AURUM</span>
-
         <header className="salonDeckIntro">
-          <p className="eyebrow"><span /> Por dentro da Aurum</p>
-          <h2>
-            Um espaço para viver
-            <em> a sua melhor versão.</em>
-          </h2>
+          <h2>Um espaço pensado para você se sentir <em>cuidada.</em></h2>
+          <span className="salonDeckRule" aria-hidden="true" />
           <p>
-            Desça para percorrer cada ambiente — do primeiro acolhimento ao seu momento de transformação.
+            Do primeiro acolhimento ao último detalhe, cada ambiente foi criado para transformar o seu momento de beleza.
           </p>
+          <a className="salonDeckLink" href="#contato">
+            Conheça nosso endereço <ArrowRight size={16} aria-hidden="true" />
+          </a>
         </header>
 
-        <div className="salonDeckCards" role="list" aria-label="Ambientes da Aurum Beauty Concept">
+        <div className="salonDeckCards">
           {salonPhotos.map((photo, index) => (
             <figure
-              className="salonDeckCard"
+              className={`salonDeckCard${activeIndex === index ? " salonDeckCardActive" : ""}`}
               key={photo.src}
-              ref={(element) => {
-                cardRefs.current[index] = element;
-              }}
-              role="listitem"
             >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                loading={index === 0 ? "eager" : "lazy"}
-                decoding="async"
-              />
+              <button
+                className="salonDeckPhoto"
+                type="button"
+                aria-label={`${activeIndex === index ? "Reduzir" : "Ampliar"} foto: ${photo.title}`}
+                aria-pressed={activeIndex === index}
+                onClick={() => setActiveIndex((current) => current === index ? null : index)}
+              >
+                <img
+                  src={photo.src}
+                  srcSet={`${photo.src.replace(".webp", "-480.webp")} 480w, ${photo.src.replace(".webp", "-720.webp")} 720w, ${photo.src} 1200w`}
+                  sizes="(max-width: 820px) 76vw, 28vw"
+                  alt={photo.alt}
+                  width={1200}
+                  height={1600}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </button>
               <figcaption>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <strong>{photo.title}</strong>
-                  <small>{photo.detail}</small>
-                </div>
-                <Sparkles size={16} aria-hidden="true" />
+                <strong>{photo.title}</strong>
+                <span aria-hidden="true" />
               </figcaption>
             </figure>
           ))}
         </div>
 
-        <div className="salonDeckStatus" aria-hidden="true">
-          <div className="salonDeckCounter">
-            <span ref={counterRef}>01</span>
-            <i />
-            <small>{String(salonPhotos.length).padStart(2, "0")}</small>
-          </div>
-          <div className="salonDeckProgress"><span ref={progressRef} /></div>
-          <p>Continue descendo <ArrowDown size={14} /></p>
-        </div>
+        <div className="salonDeckProgress" aria-hidden="true"><span /></div>
       </div>
     </section>
   );

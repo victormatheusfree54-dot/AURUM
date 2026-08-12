@@ -7,4 +7,5 @@ dist/
 .codex-logs/
 vercel-static.html
 *.log
+*.tsbuildinfo
 .DS_Store

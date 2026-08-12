@@ -1,6 +1,6 @@
 # Aurum Beauty Concept — site institucional
 
-Site responsivo em Next.js/vinext com visual editorial, serviços, avaliações, localização e dois comparadores interativos de antes e depois.
+Site responsivo em React 19 com Next.js/vinext, visual editorial, avaliações, localização, baralho interativo do salão e comparadores de antes e depois.
 
 ## Rodar no computador
 
@@ -11,17 +11,15 @@ Site responsivo em Next.js/vinext com visual editorial, serviços, avaliações,
 
 ## Trocar as fotos
 
-No Explorer de arquivos, abra `public/images`. Substitua os arquivos mantendo exatamente o mesmo nome:
+As imagens otimizadas ficam em `public/images`. O site usa AVIF como primeira opção e WebP como fallback nas transformações, com variantes de 480, 720, 800 e 1200 pixels. As fotos do salão usam WebP em 480, 720 e 1200 pixels.
 
-- `hero.jpg`: capa do site.
-- `hair-detail.jpg`: card de Mega Hair.
-- `nails.jpg`: card de Unhas.
-- `interior.jpg`: card de Estética.
-- `salon.jpg`: seção sobre o espaço.
-- `before-1.jpg` e `after-1.jpg`: primeiro resultado.
-- `before-2.jpg` e `after-2.jpg`: segundo resultado.
+Ao substituir uma foto, mantenha o nome-base e gere novamente as variantes. Exemplos:
 
-As fotos atuais são demonstrativas e vêm do Unsplash. O efeito mais escuro aplicado às imagens “antes” é apenas visual e pode ser removido em `src/app/globals.css`, na classe `.comparisonBefore`.
+- `modelo-frente-antes` e `modelo-frente-depois`: destaque principal.
+- `transformacao-1-antes` até `transformacao-4-depois`: comparadores.
+- `salao-hall-principal`, `salao-aurum-recreio`, `salao-nail-design` e `salao-estacoes-beleza`: baralho do salão.
+
+Não coloque JPEG ou PNG fotográfico diretamente na página. Converta para WebP/AVIF e mantenha a proporção original.
 
 ## Atualizar contato
 
@@ -29,9 +27,9 @@ O Instagram e o endereço já estão configurados. Quando houver telefone/WhatsA
 
 ## SEO e endereço público
 
-O projeto já inclui title e metatags, Open Graph/Twitter Preview, favicon, JSON-LD do salão, `robots.txt`, `sitemap.xml` e `llms.txt`.
+O projeto inclui title e metatags, Open Graph/Twitter Preview 1200×630, conjunto completo de favicons, manifest, JSON-LD do salão, `robots.txt`, `sitemap.xml` e `llms.txt`.
 
-Em desenvolvimento, as URLs usam `http://localhost:3000`. Antes de publicar, copie `.env.example` para `.env.local` (ou configure a variável na hospedagem) e troque pelo domínio definitivo:
+O fallback usa a URL pública atual. Para trocar o domínio, copie `.env.example` para `.env.local` ou configure a variável na hospedagem:
 
 ```env
 NEXT_PUBLIC_SITE_URL=https://www.seudominio.com.br
@@ -41,4 +39,4 @@ Depois gere uma nova versão com `npm run build`. Assim, canonical, Open Graph, 
 
 ## Gerar versão final
 
-Execute `npm run build`. O pacote de produção compatível com a hospedagem será criado na pasta `dist`.
+Execute `npm run build`. O pacote de produção compatível com a hospedagem será criado na pasta `dist`, incluindo versões Brotli/Gzip pré-comprimidas dos arquivos estáticos.
