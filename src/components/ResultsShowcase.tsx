@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeftRight } from "lucide-react";
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from "react";
 import DepthCarousel, { type DepthCarouselItem } from "./DepthCarousel";
 import { StarButton } from "./StarButton";
 
@@ -61,9 +61,9 @@ type BeforeAfterSliderProps = {
 function BeforeAfterSlider({ before, after, title, className = "", sizes }: BeforeAfterSliderProps) {
   const [reveal, setReveal] = useState(50);
   const [shouldLoad, setShouldLoad] = useState(false);
-  const isDraggingRef = useRef(false);
   const frameRef = useRef<number | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const activePointerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const slider = sliderRef.current;
@@ -88,14 +88,7 @@ function BeforeAfterSlider({ before, after, title, className = "", sizes }: Befo
   }, []);
 
   useEffect(() => {
-    const stopDraggingOnWindow = () => {
-      isDraggingRef.current = false;
-    };
-
-    window.addEventListener("mouseup", stopDraggingOnWindow);
-
     return () => {
-      window.removeEventListener("mouseup", stopDraggingOnWindow);
       if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current);
     };
   }, []);
@@ -114,20 +107,27 @@ function BeforeAfterSlider({ before, after, title, className = "", sizes }: Befo
     });
   }, []);
 
-  const handleMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
+  const startDragging = (event: PointerEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    isDraggingRef.current = true;
+    activePointerRef.current = event.pointerId;
+    sliderRef.current?.setPointerCapture(event.pointerId);
     updateRevealFromClientX(event.clientX);
   };
 
-  const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current) return;
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (activePointerRef.current !== event.pointerId) return;
+    event.preventDefault();
+    event.stopPropagation();
     updateRevealFromClientX(event.clientX);
   };
 
-  const stopDragging = () => {
-    isDraggingRef.current = false;
+  const stopDragging = (event: PointerEvent<HTMLDivElement>) => {
+    if (activePointerRef.current !== event.pointerId) return;
+    activePointerRef.current = null;
+    if (sliderRef.current?.hasPointerCapture(event.pointerId)) {
+      sliderRef.current.releasePointerCapture(event.pointerId);
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -152,9 +152,13 @@ function BeforeAfterSlider({ before, after, title, className = "", sizes }: Befo
       ref={sliderRef}
       className={`beforeAfterSlider ${className}`}
       style={{ "--reveal": `${reveal}%` } as CSSProperties}
-      onMouseMove={handleMouseMove}
-      onMouseUp={stopDragging}
-      onMouseLeave={stopDragging}
+      onPointerDown={startDragging}
+      onPointerMove={handlePointerMove}
+      onPointerUp={stopDragging}
+      onPointerCancel={stopDragging}
+      onLostPointerCapture={() => {
+        activePointerRef.current = null;
+      }}
     >
       <figure className="beforeAfterLayer beforeAfterBefore">
         <SalonPhoto name={before} alt={`Antes — ${title}`} sizes={sizes} shouldLoad={shouldLoad} />
@@ -175,7 +179,7 @@ function BeforeAfterSlider({ before, after, title, className = "", sizes }: Befo
         aria-valuenow={Math.round(reveal)}
         aria-valuetext={`${Math.round(reveal)}% da imagem Antes visível`}
         role="slider"
-        onMouseDown={handleMouseDown}
+        onPointerDown={startDragging}
         onKeyDown={handleKeyDown}
       >
         <ArrowLeftRight size={18} strokeWidth={1.4} aria-hidden="true" />
@@ -229,6 +233,7 @@ const transformations: DepthCarouselItem[] = [
 
 export function ResultsShowcase() {
   const [activeItem, setActiveItem] = useState<DepthCarouselItem>(transformations[0]);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <section className="resultsSection" id="resultados" aria-labelledby="transformations-title">
@@ -256,8 +261,17 @@ export function ResultsShowcase() {
             visibleCards={3}
             blur={5}
             autoplay={false}
-            onChange={(_, item) => setActiveItem(item)}
-            renderCardContent={(item, isActive) => {
+            onChange={(index, item) => {
+              setActiveIndex(index);
+              setActiveItem(item);
+            }}
+            renderCardContent={(item, isActive, index) => {
+              const circularDistance = Math.min(
+                Math.abs(index - activeIndex),
+                transformations.length - Math.abs(index - activeIndex)
+              );
+              const shouldLoadPreview = circularDistance <= 2;
+
               if (isActive && item.before && item.after) {
                 return (
                   <BeforeAfterSlider
@@ -274,7 +288,7 @@ export function ResultsShowcase() {
                   name={item.after || "transformacao-4-depois"}
                   alt={item.title}
                   sizes="(max-width: 768px) 95vw, 700px"
-                  shouldLoad={true}
+                  shouldLoad={shouldLoadPreview}
                 />
               );
             }}
@@ -304,3 +318,4 @@ export function ResultsShowcase() {
     </section>
   );
 }
+

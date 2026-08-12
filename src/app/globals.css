@@ -518,7 +518,30 @@ main { overflow: clip; }
 
 .beforeAfterBefore figcaption { left: 20px; }
 .beforeAfterAfter figcaption { right: 20px; }
-.beforeAfterDivider { position: absolute; z-index: 4; top: 0; bottom: 0; left: var(--reveal); width: 1px; background: rgba(255, 255, 255, 0.92); box-shadow: 0 0 16px rgba(0, 0, 0, 0.28); pointer-events: none; will-change: left; }
+.beforeAfterDivider {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  bottom: 0;
+  left: var(--reveal);
+  width: 2px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.32);
+  pointer-events: none;
+  will-change: left;
+}
+
+.beforeAfterDivider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 42px;
+  transform: translateX(-50%);
+  background: transparent;
+}
+
 .beforeAfterHandle {
   position: absolute;
   z-index: 7;
@@ -539,6 +562,13 @@ main { overflow: clip; }
   transform: translate(-50%, -50%);
   will-change: left, transform;
   transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.beforeAfterHandle::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: 999px;
 }
 
 .beforeAfterHandle:hover { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.36); }
@@ -1390,6 +1420,15 @@ main { overflow: clip; }
   .resultsFeatureCopy { max-width: 620px; padding-inline: 22px; }
   .resultsFeatureMedia, .resultsFeatureSlider { width: 100%; max-width: none; }
   .resultsRailHeader { grid-template-columns: 1fr; align-items: start; gap: 24px; }
+  .beforeAfterSlider { touch-action: none; }
+  .beforeAfterDivider { width: 3px; }
+  .beforeAfterHandle {
+    width: 64px;
+    height: 64px;
+    border-width: 2px;
+  }
+  .beforeAfterHandle::before { inset: -28px; }
+  .beforeAfterHandle svg { width: 24px; height: 24px; }
 
   .salonSection { scroll-margin-top: 72px; padding: 60px 20px; }
   .salonGrid { grid-template-columns: 1fr; gap: 32px; }
@@ -1429,7 +1468,7 @@ main { overflow: clip; }
   .beforeAfterLayer figcaption { top: 15px; }
   .beforeAfterBefore figcaption { left: 15px; }
   .beforeAfterAfter figcaption { right: 15px; }
-  .beforeAfterHandle { width: 44px; height: 44px; }
+  .beforeAfterHandle { width: 68px; height: 68px; }
 
   .salonSection { padding-top: 50px; }
 
