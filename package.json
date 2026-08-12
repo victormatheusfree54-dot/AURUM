@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vinext dev",
+    "dev": "next dev",
     "build": "vinext build && node scripts/prepare-hosting.mjs",
     "start": "vinext start"
   },
   "dependencies": {
+    "gsap": "^3.15.0",
     "lucide-react": "latest",
     "next": "latest",
     "react": "latest",

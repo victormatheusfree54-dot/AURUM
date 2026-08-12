@@ -2,6 +2,7 @@
 
 import { ArrowLeftRight, ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
+import DepthCarousel, { type DepthCarouselItem } from "./DepthCarousel";
 
 const photoPlaceholder =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1607' viewBox='0 0 1200 1607'%3E%3Crect width='1200' height='1607' fill='%23554b44'/%3E%3C/svg%3E";
@@ -78,7 +79,7 @@ function BeforeAfterSlider({ before, after, title, className = "", sizes }: Befo
         setShouldLoad(true);
         observer.disconnect();
       },
-      { rootMargin: "350px 0px" },
+      { rootMargin: "350px 0px" }
     );
 
     observer.observe(slider);
@@ -114,6 +115,7 @@ function BeforeAfterSlider({ before, after, title, className = "", sizes }: Befo
 
   const handleMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    event.stopPropagation();
     isDraggingRef.current = true;
     updateRevealFromClientX(event.clientX);
   };
@@ -140,6 +142,7 @@ function BeforeAfterSlider({ before, after, title, className = "", sizes }: Befo
     const action = keyActions[event.key];
     if (!action) return;
     event.preventDefault();
+    event.stopPropagation();
     action();
   };
 
@@ -180,68 +183,123 @@ function BeforeAfterSlider({ before, after, title, className = "", sizes }: Befo
   );
 }
 
-const transformations = [
-  { name: "transformacao-4", title: "Morena iluminada", detail: "Luz, contraste e ondas marcantes" },
-  { name: "transformacao-2", title: "Corte em camadas", detail: "Mais comprimento, balanço e presença" },
-  { name: "transformacao-1", title: "Recuperação dos fios", detail: "Textura alinhada, brilho e movimento natural" },
-  { name: "transformacao-3", title: "Loiro luminoso", detail: "Tonalidade elegante e acabamento suave" },
+const transformations: DepthCarouselItem[] = [
+  {
+    id: "morena-iluminada",
+    before: "transformacao-4-antes",
+    after: "transformacao-4-depois",
+    title: "Morena iluminada",
+    detail: "Luz, contraste e ondas marcantes com brilho tridimensional.",
+    tags: ["Coloração", "Iluminação", "Tonalização"],
+  },
+  {
+    id: "corte-camadas",
+    before: "transformacao-2-antes",
+    after: "transformacao-2-depois",
+    title: "Corte em camadas",
+    detail: "Mais comprimento, balanço e movimento natural para os fios.",
+    tags: ["Corte Editorial", "Balanço"],
+  },
+  {
+    id: "recuperacao-fios",
+    before: "transformacao-1-antes",
+    after: "transformacao-1-depois",
+    title: "Recuperação dos fios",
+    detail: "Textura alinhada, nutrição profunda e restauração da fibra.",
+    tags: ["Tratamento", "Restauração"],
+  },
+  {
+    id: "loiro-luminoso",
+    before: "transformacao-3-antes",
+    after: "transformacao-3-depois",
+    title: "Loiro luminoso",
+    detail: "Tonalidade elegante com acabamento suave e proteção completa.",
+    tags: ["Loiro Luxo", "Finalização"],
+  },
+  {
+    id: "aurum-woman",
+    before: "modelo-frente-antes",
+    after: "modelo-frente-depois",
+    title: "Transformação Aurum Woman",
+    detail: "Acolhimento e atendimento exclusivo para valorizar sua essência.",
+    tags: ["Mega Hair", "Experiência"],
+  },
 ];
 
 export function ResultsShowcase() {
+  const [activeItem, setActiveItem] = useState<DepthCarouselItem>(transformations[0]);
+
   return (
-    <div className="resultsExperience">
-      <section className="resultsFeatureBand" aria-labelledby="front-model-title">
-        <div className="resultsFeatureInner">
-          <div className="resultsFeatureCopy">
-            <h2 id="front-model-title">Transformações que <em>fazem você se reconhecer.</em></h2>
-            <p>
-              Resultados reais, respeitando o seu estilo e a sua história. Aqui, a mulher continua sendo a protagonista.
-            </p>
-            <a href="#contato" className="resultsFeatureLink">
-              Quero viver minha transformação <ArrowRight size={16} aria-hidden="true" />
-            </a>
-          </div>
-
-          <div className="resultsFeatureMedia">
-            <BeforeAfterSlider
-              before="modelo-frente-antes"
-              after="modelo-frente-depois"
-              title="Transformação Aurum Woman"
-              className="resultsFeatureSlider"
-              sizes="(max-width: 820px) 100vw, min(56vw, 720px)"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="resultsRailSection" aria-labelledby="transformations-title">
-        <header className="resultsRailHeader">
-          <h2 id="transformations-title">Resultados reais, <em>beleza do seu jeito.</em></h2>
+    <section className="resultsSection" id="resultados" aria-labelledby="transformations-title">
+      <div className="resultsContainer">
+        <header className="resultsEditorialHeader">
+          <span className="resultsTagline">TRANSFORMAÇÕES REAIS</span>
+          <h2 id="transformations-title">
+            Resultados reais, <em>beleza do seu jeito.</em>
+          </h2>
           <p>
-            Segure a bolinha e arraste a linha para descobrir cada transformação. As imagens mantêm a proporção original para uma comparação honesta.
+            Deslize a divisória no centro para comparar o antes e depois de cada trabalho realizado pelo time do Aurum Beauty Concept.
           </p>
         </header>
 
-        <div className="resultsRailViewport">
-          <div className="resultsRail">
-            {transformations.map((item) => (
-              <article className="resultsRailItem" key={item.name}>
-                <BeforeAfterSlider
-                  before={`${item.name}-antes`}
-                  after={`${item.name}-depois`}
-                  title={item.title}
-                  className="resultsRailSlider"
-                  sizes="(max-width: 560px) 84vw, (max-width: 1100px) 48vw, min(31vw, 460px)"
+        <div className="resultsDepthWrapper">
+          <DepthCarousel
+            items={transformations}
+            cardWidth={700}
+            cardHeight={900}
+            depth={260}
+            spread={180}
+            tilt={16}
+            tiltDirection="right"
+            perspective={1800}
+            visibleCards={3}
+            blur={5}
+            autoplay={false}
+            onChange={(_, item) => setActiveItem(item)}
+            renderCardContent={(item, isActive) => {
+              if (isActive && item.before && item.after) {
+                return (
+                  <BeforeAfterSlider
+                    before={item.before}
+                    after={item.after}
+                    title={item.title}
+                    className="depthCardSlider"
+                    sizes="(max-width: 768px) 95vw, 700px"
+                  />
+                );
+              }
+              return (
+                <SalonPhoto
+                  name={item.after || "transformacao-4-depois"}
+                  alt={item.title}
+                  sizes="(max-width: 768px) 95vw, 700px"
+                  shouldLoad={true}
                 />
-                <div className="resultsRailCaption">
-                  <h3>{item.title}</h3>
-                  <p>{item.detail}</p>
-                </div>
-              </article>
-            ))}
+              );
+            }}
+          />
+
+          <div className="resultsActiveDetail">
+            <h3>{activeItem.title}</h3>
+            <p>{activeItem.detail}</p>
+            {activeItem.tags && (
+              <div className="resultsTags">
+                {activeItem.tags.map((tag) => (
+                  <span key={tag} className="resultsTag">
+                    [ {tag} ]
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <div className="resultsCtaWrap">
+              <a href="#contato" className="button buttonGold">
+                Quero viver minha transformação <ArrowRight size={17} aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

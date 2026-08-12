@@ -325,67 +325,484 @@ main { overflow: clip; }
 .beforeAfterHandle:active { cursor: grabbing; transform: translate(-50%, -50%) scale(0.96); }
 .beforeAfterHandle:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 
-.resultsRailSection { padding: clamp(90px, 10vw, 150px) 0 clamp(100px, 11vw, 165px); color: var(--ink); background: var(--paper); }
-.resultsRailHeader {
-  width: min(100%, 1500px);
+/* Transformações Reais - Editorial Depth Section */
+.resultsSection {
+  position: relative;
+  padding: clamp(80px, 9vw, 130px) clamp(22px, 6vw, 96px);
+  padding-bottom: clamp(100px, 11vw, 160px);
+  color: var(--ink);
+  background: var(--paper);
+  overflow: visible;
+}
+
+.resultsContainer {
+  width: min(100%, 1400px);
   margin-inline: auto;
-  padding-inline: clamp(22px, 6vw, 96px);
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(250px, 0.55fr);
-  align-items: end;
-  gap: clamp(34px, 7vw, 110px);
+  overflow: visible;
 }
 
-.resultsRailHeader h2 { max-width: 890px; font-size: clamp(50px, 5.8vw, 86px); line-height: 0.94; }
-.resultsRailHeader h2 em { color: #9b7968; }
-.resultsRailHeader > p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.78; }
-.resultsRailViewport { margin-top: clamp(46px, 6vw, 76px); overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: inline mandatory; scrollbar-width: thin; scrollbar-color: var(--gold) transparent; }
-.resultsRailViewport::-webkit-scrollbar { height: 5px; }
-.resultsRailViewport::-webkit-scrollbar-thumb { background: var(--gold); }
-.resultsRail {
-  width: max-content;
-  padding-inline: max(22px, calc((100vw - 1500px) / 2 + 96px));
-  padding-bottom: 22px;
+.resultsEditorialHeader {
+  text-align: center;
+  max-width: 760px;
+  margin-inline: auto;
+  margin-bottom: clamp(36px, 4vw, 56px);
+}
+
+.resultsTagline {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.resultsEditorialHeader h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(42px, 5.2vw, 76px);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+}
+
+.resultsEditorialHeader h2 em {
+  display: inline-block;
+  color: #9b7968;
+  font-style: italic;
+}
+
+.resultsEditorialHeader p {
+  margin: 20px auto 0;
+  color: var(--muted);
+  font-size: clamp(14px, 1.15vw, 16px);
+  line-height: 1.7;
+  max-width: 620px;
+}
+
+.resultsDepthWrapper {
   display: flex;
-  gap: clamp(18px, 2.2vw, 34px);
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  overflow: visible;
 }
 
-.resultsRailItem { flex: 0 0 clamp(300px, 31vw, 460px); min-width: 0; scroll-snap-align: start; transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1); }
-.resultsRailSlider { width: 100%; aspect-ratio: 3 / 4; background: #554b44; touch-action: pan-x pan-y; }
-.resultsRailCaption { padding: 20px 2px 0; }
-.resultsRailCaption h3 { margin: 0; font: clamp(22px, 2vw, 30px)/1.08 var(--serif); letter-spacing: -0.025em; }
-.resultsRailCaption p { margin: 8px 0 0; color: var(--muted); font-size: 9px; letter-spacing: 0.09em; line-height: 1.5; text-transform: uppercase; }
+.depthCardSlider {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
 
-/* O espaço */
-.salonDeckSection { position: relative; min-height: calc(100svh - 82px); color: var(--ink); background: var(--paper-light); }
-.salonDeckSticky { position: relative; height: calc(100svh - 82px); min-height: 660px; overflow: hidden; isolation: isolate; }
-.salonDeckSticky::before { content: ""; position: absolute; z-index: 40; inset: 0 auto 0 0; width: 28vw; background: #f0e6e0; pointer-events: none; }
-.salonDeckIntro { position: absolute; z-index: 60; top: 50%; left: clamp(28px, 4.2vw, 68px); width: min(20vw, 310px); transform: translateY(-50%); }
-.salonDeckIntro h2 { font-size: clamp(38px, 3.5vw, 56px); line-height: 1.03; }
-.salonDeckIntro h2 em { display: block; color: #96672b; }
-.salonDeckRule { width: 64px; height: 1px; margin-top: 38px; display: block; background: var(--gold); }
-.salonDeckIntro > p { max-width: 230px; margin: 36px 0 0; color: #71665f; font-size: 12px; line-height: 1.85; }
-.salonDeckLink { min-height: 58px; margin-top: 42px; padding: 0 18px; justify-content: center; color: #d2a65f; border: 0; background: var(--ink); }
-.salonDeckCards { position: absolute; z-index: 20; top: 2svh; left: calc(28vw - 18px); width: min(1045px, 72vw); height: 650px; overflow: visible; }
-.salonDeckCard { position: absolute; margin: 0; transform-origin: center center; transition: transform 350ms cubic-bezier(.2,.8,.2,1), filter 350ms ease, box-shadow 350ms ease; }
-.salonDeckCard:nth-child(1) { z-index: 4; top: 0; left: 0; width: 34.45%; height: 565px; }
-.salonDeckCard:nth-child(2) { z-index: 3; top: 45px; left: 33.97%; width: 28.71%; height: 500px; }
-.salonDeckCard:nth-child(3) { z-index: 2; top: 95px; left: 61.24%; width: 23.44%; height: 430px; }
-.salonDeckCard:nth-child(4) { z-index: 1; top: 130px; left: 81.82%; width: 18.18%; height: 365px; }
-.salonDeckCard:hover { z-index: 20; transform: scale(1.08); }
-.salonDeckCardActive,
-.salonDeckCardActive:hover { z-index: 50; transform: scale(1.18); }
-.salonDeckPhoto { width: 100%; height: 100%; padding: 0; display: block; overflow: hidden; border: 0; background: #c5b7ad; box-shadow: 0 12px 26px rgba(61, 43, 34, 0.18); cursor: zoom-in; transition: transform 350ms cubic-bezier(.2,.8,.2,1), filter 350ms ease, box-shadow 350ms ease; }
-.salonDeckCard:hover .salonDeckPhoto { box-shadow: 0 22px 46px rgba(61, 43, 34, 0.28); }
-.salonDeckCardActive .salonDeckPhoto { box-shadow: 0 28px 62px rgba(61, 43, 34, 0.34); cursor: zoom-out; }
-.salonDeckPhoto:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
-.salonDeckPhoto img { width: 100%; height: 100%; object-fit: cover; transform-origin: center center; transition: transform 350ms cubic-bezier(.2,.8,.2,1), filter 350ms ease, box-shadow 350ms ease; }
-.salonDeckCard figcaption { position: absolute; top: 100%; right: 0; left: 0; padding: 25px 4px 0; text-align: center; }
-.salonDeckCard figcaption strong { display: block; font: 14px/1.2 var(--sans); font-weight: 500; }
-.salonDeckCard figcaption span { width: 84px; height: 1px; margin: 15px auto 0; display: block; background: var(--gold); }
-.salonDeckProgress { position: absolute; z-index: 70; right: 6vw; bottom: 10svh; left: 31vw; height: 2px; overflow: visible; background: rgba(184, 137, 69, 0.24); }
-.salonDeckProgress span { position: relative; display: block; width: 28%; height: 100%; background: var(--gold); }
-.salonDeckProgress span::after { content: ""; position: absolute; top: 50%; right: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); transform: translateY(-50%); }
+.resultsActiveDetail {
+  text-align: center;
+  max-width: 580px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.resultsActiveDetail h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.resultsActiveDetail p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.resultsTags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.resultsTag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.resultsCtaWrap {
+  margin-top: 14px;
+}
+
+
+/* O espaço - Editorial Showcase */
+.salonSection {
+  position: relative;
+  padding: clamp(80px, 9vw, 130px) clamp(22px, 6vw, 96px);
+  color: var(--ink);
+  background: var(--paper-light);
+}
+
+.salonContainer {
+  width: min(100%, 1400px);
+  margin-inline: auto;
+}
+
+.salonHeader {
+  max-width: 720px;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.salonTagline {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.salonHeader h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(42px, 5vw, 76px);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+.salonHeader h2 em {
+  display: inline-block;
+  color: #9b7968;
+  font-style: italic;
+}
+
+.salonHeader p {
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+.salonGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  gap: clamp(32px, 4vw, 56px);
+  align-items: start;
+}
+
+.salonMainFeature {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.salonFeatureMedia {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #d8c3b7;
+}
+
+.salonFeatureMedia picture,
+.salonFeatureMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.salonFeatureMedia img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.salonMainFeature:hover .salonFeatureMedia img {
+  transform: scale(1.03);
+}
+
+.salonZoomBtn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(27, 23, 20, 0.82);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.salonZoomBtn:hover {
+  background: var(--ink);
+  transform: scale(1.04);
+}
+
+.salonFeatureInfo {
+  padding: clamp(24px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.salonFeatureSubtitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.salonFeatureTitle {
+  margin: 6px 0 12px;
+  font-family: var(--serif);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.salonFeatureDesc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.salonActionWrap {
+  margin-top: 12px;
+}
+
+/* Uiverse Custom Button CSS */
+.uiverseBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 16rem;
+  height: 4rem;
+  padding: 0.75rem 1rem;
+  background-color: #262626;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.5rem;
+  color: #f9fafb;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  transform-origin: left;
+  transition: border-color 0.5s ease, color 0.5s ease, text-decoration 0.5s ease, text-underline-offset 0.5s ease;
+}
+
+.uiverseBtn::before {
+  content: '';
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  z-index: 10;
+  width: 3rem;
+  height: 3rem;
+  background-color: #8b5cf6;
+  border-radius: 9999px;
+  filter: blur(16px);
+  transition: all 0.5s ease;
+}
+
+.uiverseBtn::after {
+  content: '';
+  position: absolute;
+  top: 0.75rem;
+  right: 2rem;
+  z-index: 10;
+  width: 5rem;
+  height: 5rem;
+  background-color: #fda4af;
+  border-radius: 9999px;
+  filter: blur(16px);
+  transition: all 0.5s ease;
+}
+
+.uiverseBtn:hover {
+  border-color: #fda4af;
+  color: #fda4af;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+
+.uiverseBtn:hover::before {
+  right: 3rem;
+  bottom: -2rem;
+  top: auto;
+  box-shadow: 20px 20px 20px 30px #a21caf;
+  filter: blur(16px);
+}
+
+.uiverseBtn:hover::after {
+  right: -2rem;
+}
+
+/* Thumbnails Selector */
+.salonThumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.salonThumbCard {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.salonThumbCard:hover {
+  border-color: var(--gold);
+  transform: translateX(4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.salonThumbSelected {
+  border-color: var(--gold);
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(184, 137, 69, 0.12);
+}
+
+.salonThumbMedia {
+  width: 90px;
+  height: 70px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #c5b7ad;
+}
+
+.salonThumbMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.salonThumbMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.salonThumbMeta strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.salonThumbMeta span {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* Lightbox Modal */
+.salonModalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(15, 12, 10, 0.88);
+  backdrop-filter: blur(12px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.salonModalContent {
+  position: relative;
+  max-width: 1000px;
+  width: 100%;
+  max-height: 90vh;
+  background: var(--ink);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.salonModalClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.salonModalClose:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.salonModalContent img {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  background: #000;
+}
+
+.salonModalCaption {
+  padding: 20px 28px;
+  color: #fff;
+}
+
+.salonModalCaption h4 {
+  margin: 0 0 6px;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.salonModalCaption p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+}
+
 
 /* Avaliações */
 .closingShell { width: 100%; margin: 0; overflow: hidden; background: var(--paper-light); }
@@ -408,34 +825,124 @@ main { overflow: clip; }
 .reviewSecondary blockquote + blockquote { padding-right: 12px; padding-left: clamp(22px, 3vw, 48px); border-left: 1px solid var(--line); }
 .reviewSecondary p { margin: 0; font: clamp(15px, 1.25vw, 18px)/1.45 var(--serif); }
 
-/* Contato */
-.contactSection { position: relative; width: 100%; height: auto; min-height: 0; aspect-ratio: 2156 / 678; margin: 0; overflow: hidden; color: #fff; background: var(--espresso); content-visibility: auto; contain-intrinsic-size: auto 385px; isolation: isolate; }
-.contactSection::after { display: none; }
-.contactMedia { position: absolute; z-index: -2; inset: 0; background: #756256; }
-.contactMedia picture, .contactMedia img { width: 100%; height: 100%; }
-.contactMedia img { object-fit: cover; object-position: center; }
-.contactMobileMedia { display: none; }
-.contactDesktopAddress { position: absolute; z-index: 3; top: 57.2%; left: 5.7%; width: 26.5%; min-height: 22%; margin: 0; padding: 9px 42px 9px 8px; display: flex; align-items: flex-start; gap: 13px; color: #fff; background: linear-gradient(90deg, #211811 0%, #211811 88%, rgba(33, 24, 17, 0) 100%); font-style: normal; }
-.contactDesktopAddress svg { flex: 0 0 auto; margin-top: 1px; color: #d8a24d; stroke-width: 2; }
-.contactDesktopAddress p { margin: 0; font-size: clamp(9px, 0.95vw, 14px); font-weight: 500; line-height: 1.45; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.36); }
-.contactDesktopAddress strong { display: block; margin-bottom: 1px; font-weight: 750; }
-.contactHotspots { position: absolute; z-index: 3; inset: 0; }
-.contactHotspots a { position: absolute; bottom: 7.4%; height: 12.7%; display: flex; align-items: center; justify-content: center; gap: 14px; color: #fff; border: 1px solid transparent; font-size: clamp(8px, 0.82vw, 12px); font-weight: 700; letter-spacing: 0.13em; line-height: 1; text-transform: uppercase; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); }
-.contactHotspots a:first-child { left: 6.35%; width: 14.8%; }
-.contactHotspots a:last-child { left: 22.05%; width: 18%; }
-.contactHotspotMaps { background: #c9954b; border-color: #d8ac69 !important; box-shadow: inset 0 0 0 1px rgba(91, 56, 22, 0.26); }
-.contactHotspotInstagram { background: rgba(22, 17, 13, 0.94); border-color: rgba(255, 255, 255, 0.88) !important; }
-.contactHotspots a:hover { filter: brightness(1.08); }
-.contactHotspots a:focus-visible { border-color: #fff; outline: 2px solid #cfa059; outline-offset: 3px; }
-.contactCopy { display: none; position: absolute; z-index: 2; top: 14%; left: 6.5%; width: min(390px, 42%); max-width: 390px; min-height: 0; padding: 0; }
-.contactCopy h2 { max-width: 390px; font-size: clamp(42px, 4.5vw, 58px); line-height: 0.95; }
-.contactCopy h2 em { display: block; }
-.addressBlock { margin: 22px 0 0; display: flex; align-items: flex-start; gap: 14px; color: rgba(255, 255, 255, 0.82); font-style: normal; }
-.addressBlock svg { margin-top: 2px; flex: 0 0 auto; color: #d5b47e; }
-.addressBlock p { margin: 0; font-size: 12px; line-height: 1.65; }
-.addressBlock strong { display: block; color: #fff; font-size: 13px; }
-.contactActions { margin-top: 20px; display: flex; align-items: center; flex-wrap: nowrap; gap: 10px; }
-.contactActions .button { min-height: 48px; padding-inline: 32px; white-space: nowrap; }
+/* Contato - Editorial Location Card */
+.contactSection {
+  position: relative;
+  width: 100%;
+  padding: clamp(70px, 8vw, 110px) clamp(22px, 6vw, 96px);
+  color: #fff;
+  background: var(--ink);
+}
+
+.contactContainer {
+  width: min(100%, 1320px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(320px, 480px) minmax(0, 1fr);
+  gap: clamp(36px, 5vw, 72px);
+  align-items: center;
+}
+
+.contactCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contactCard h2 {
+  margin: 0 0 24px;
+  font-family: var(--serif);
+  font-size: clamp(38px, 4.5vw, 62px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.contactCard h2 em {
+  display: block;
+  color: var(--gold);
+  font-style: italic;
+}
+
+.addressBlock {
+  margin: 12px 0 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  color: rgba(255, 255, 255, 0.78);
+  font-style: normal;
+}
+
+.addressBlock svg {
+  margin-top: 3px;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+
+.addressBlock p {
+  margin: 0;
+  font-size: clamp(13px, 1.1vw, 15px);
+  line-height: 1.65;
+}
+
+.addressBlock strong {
+  display: block;
+  color: #fff;
+  font-size: clamp(15px, 1.2vw, 17px);
+  margin-bottom: 2px;
+}
+
+.contactActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.contactActions .button {
+  min-height: 52px;
+  padding-inline: 26px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.contactMediaFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  background: #2b231d;
+}
+
+.contactMediaFrame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contactMediaFrame:hover img {
+  transform: scale(1.03);
+}
+
+.contactMediaCaption {
+  position: absolute;
+  bottom: 0;
+  inset-inline: 0;
+  padding: 16px 20px;
+  background: linear-gradient(180deg, transparent 0%, rgba(15, 12, 10, 0.85) 100%);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 
 /* Rodapé */
 .footer { padding: 16px 78px 17px; color: var(--ink); background: var(--paper-light); }
@@ -489,35 +996,21 @@ main { overflow: clip; }
   .resultsFeatureMedia, .resultsFeatureSlider { width: 100%; max-width: none; }
   .resultsRailHeader { grid-template-columns: 1fr; align-items: start; gap: 24px; }
 
-  .salonDeckSection { height: auto; padding: 86px 0 78px; }
+  .salonSection { scroll-margin-top: 72px; padding: 60px 20px; }
+  .salonGrid { grid-template-columns: 1fr; gap: 32px; }
+  .salonThumbnails { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .salonFeatureMedia { aspect-ratio: 16 / 10; }
+  .uiverseBtn { width: 100%; justify-content: center; }
   .resultsSection,
-  .salonDeckSection,
+  .salonSection,
   .reviewsSection,
   .contactSection { scroll-margin-top: 72px; }
-  .salonDeckSticky { position: relative; height: auto; min-height: 0; overflow: visible; }
-  .salonDeckSticky::before { display: none; }
-  .salonDeckIntro { position: relative; top: auto; right: auto; left: auto; width: auto; max-width: 620px; margin: 0 24px 54px; transform: none; }
-  .salonDeckIntro h2 { font-size: clamp(45px, 8vw, 68px); }
-  .salonDeckIntro > p { max-width: 520px; }
-  .salonDeckCards { position: relative; inset: auto; height: auto; padding: 8px 24px 28px; display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; perspective: none; }
-  .salonDeckCard,
-  .salonDeckCard:nth-child(n) { position: relative; top: auto; left: auto; flex: 0 0 min(72vw, 360px); width: min(72vw, 360px); height: auto; margin-top: 0; opacity: 1 !important; pointer-events: auto !important; transform: none !important; scroll-snap-align: center; }
-  .salonDeckCard:nth-child(n) .salonDeckPhoto { height: auto; aspect-ratio: 3 / 4; }
-  .salonDeckCard figcaption { position: static; }
-  .salonDeckCard figcaption { opacity: 1; transform: none; }
-  .salonDeckProgress { display: none; }
 
   .reviewsEditorial { padding: 64px 24px 52px; grid-template-columns: 1fr; gap: 52px; }
   .reviewsEditorialHeader h2 { max-width: 620px; }
 
-  .contactSection { min-height: 520px; aspect-ratio: auto; }
-  .contactSection::after { content: ""; position: absolute; z-index: -1; inset: 0; display: block; background: linear-gradient(90deg, rgba(19, 13, 10, 0.9) 0%, rgba(19, 13, 10, 0.72) 62%, rgba(19, 13, 10, 0.22) 100%); }
-  .contactWideMedia { display: none; }
-  .contactMobileMedia { display: block; }
-  .contactMobileMedia img { object-position: 48% 32%; }
-  .contactDesktopAddress { display: none; }
-  .contactHotspots { display: none; }
-  .contactCopy { position: relative; top: auto; left: auto; width: min(78%, 650px); min-height: 520px; padding: 58px 24px; display: block; }
+  .contactContainer { grid-template-columns: 1fr; gap: 40px; }
+  .contactMediaFrame { aspect-ratio: 16 / 10; }
 
   .footerTop { grid-template-columns: 145px 1fr auto; }
   .footerTop nav { gap: 18px; }
@@ -543,15 +1036,7 @@ main { overflow: clip; }
   .beforeAfterAfter figcaption { right: 15px; }
   .beforeAfterHandle { width: 44px; height: 44px; }
 
-  .salonDeckSection { padding-top: 72px; }
-  .salonDeckIntro { margin-inline: 20px; }
-  .salonDeckIntro h2 { font-size: clamp(40px, 11.5vw, 54px); }
-  .salonDeckIntro > p { margin-top: 18px; font-size: 10px; }
-  .salonDeckLink { margin-top: 24px; font-size: 8px; }
-  .salonDeckCards { padding-inline: 20px; }
-  .salonDeckCard,
-  .salonDeckCard:nth-child(n) { flex-basis: min(78vw, 320px); width: min(78vw, 320px); }
-  .salonDeckCard figcaption strong { font-size: 18px; }
+  .salonSection { padding-top: 50px; }
 
   .reviewsEditorialHeader h2 { font-size: clamp(48px, 14vw, 68px); }
   .reviewScore { margin-top: 24px; }
@@ -562,10 +1047,6 @@ main { overflow: clip; }
   .reviewSecondary blockquote + blockquote { padding-left: 0; border-top: 1px solid var(--line); border-left: 0; }
   .reviewSecondary p { font-size: 19px; }
 
-  .contactSection { min-height: 570px; }
-  .contactSection::after { background: rgba(19, 13, 10, 0.62); }
-  .contactCopy { width: 100%; min-height: 570px; padding: 54px 20px; }
-  .contactCopy h2 { font-size: clamp(49px, 14vw, 68px); }
   .contactActions { align-items: stretch; flex-direction: column; }
   .contactActions .button { width: 100%; }
 

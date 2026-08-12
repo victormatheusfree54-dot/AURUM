@@ -205,72 +205,41 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        className="contactSection"
-        id="contato"
-        aria-label="Seu próximo momento começa aqui. Aurum Beauty Concept, Avenida das Américas, 19020."
-      >
-        <div className="contactMedia">
-          <picture className="contactWideMedia">
+      <section className="contactSection" id="contato" aria-label="Seu próximo momento começa aqui">
+        <div className="contactContainer">
+          <div className="contactCard">
+            <h2>Seu próximo momento <em>começa aqui.</em></h2>
+            <address className="addressBlock">
+              <MapPin size={22} aria-hidden="true" />
+              <p>
+                <strong>Av. das Américas, 19020</strong>
+                Recreio dos Bandeirantes<br />
+                Rio de Janeiro — RJ, 22790-704
+              </p>
+            </address>
+
+            <div className="contactActions">
+              <a className="button buttonGold" href={mapsUrl} target="_blank" rel="noopener noreferrer">
+                Como chegar <ArrowRight size={17} aria-hidden="true" />
+              </a>
+              <a className="button buttonOutlineLight" href={siteConfig.instagram} target="_blank" rel="noopener noreferrer">
+                Agendar pelo Instagram
+              </a>
+            </div>
+          </div>
+
+          <div className="contactMediaFrame">
             <img
-              src="/images/salao-banner-ultrawide-sharp.webp"
-              alt="Vista panorâmica do salão Aurum Beauty Concept"
-              width={2156}
-              height={678}
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-          <picture className="contactMobileMedia" aria-hidden="true">
-            <source
-              srcSet="/images/salao-hall-principal-480.webp 480w, /images/salao-hall-principal-720.webp 720w, /images/salao-hall-principal.webp 1200w"
-              sizes="100vw"
-              type="image/webp"
-            />
-            <img
-              src="/images/salao-hall-principal.webp"
-              alt=""
+              src="/images/salao-aurum-recreio.webp"
+              alt="Fachada e recepção da Aurum Beauty Concept no Recreio dos Bandeirantes"
               width={1200}
-              height={1600}
+              height={900}
               loading="lazy"
               decoding="async"
             />
-          </picture>
-        </div>
-
-        <address className="contactDesktopAddress">
-          <MapPin size={22} aria-hidden="true" />
-          <p>
-            <strong>Av. das Américas, 19020</strong>
-            Recreio dos Bandeirantes<br />Rio de Janeiro — RJ, 22790-704
-          </p>
-        </address>
-
-        <div className="contactHotspots">
-          <a className="contactHotspotMaps" href={mapsUrl} target="_blank" rel="noopener noreferrer">
-            Como chegar <ArrowRight size={18} aria-hidden="true" />
-          </a>
-          <a className="contactHotspotInstagram" href={siteConfig.instagram} target="_blank" rel="noopener noreferrer">
-            Agendar pelo Instagram
-          </a>
-        </div>
-
-        <div className="contactCopy">
-          <h2>Seu próximo momento <em>começa aqui.</em></h2>
-          <address className="addressBlock">
-            <MapPin size={21} aria-hidden="true" />
-            <p>
-              <strong>Av. das Américas, 19020</strong>
-              Recreio dos Bandeirantes<br />Rio de Janeiro — RJ, 22790-704
-            </p>
-          </address>
-          <div className="contactActions">
-            <a className="button buttonGold" href={mapsUrl} target="_blank" rel="noopener noreferrer">
-              Como chegar <ArrowRight size={17} aria-hidden="true" />
-            </a>
-            <a className="button buttonOutlineLight" href={siteConfig.instagram} target="_blank" rel="noopener noreferrer">
-              Agendar pelo Instagram
-            </a>
+            <div className="contactMediaCaption">
+              <span>Aurum Beauty Concept · Recreio dos Bandeirantes</span>
+            </div>
           </div>
         </div>
       </section>
