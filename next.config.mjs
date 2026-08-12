@@ -2,6 +2,9 @@
 const nextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
+  turbopack: {
+    root: process.cwd(),
+  },
   experimental: {
     inlineCss: true,
   },
