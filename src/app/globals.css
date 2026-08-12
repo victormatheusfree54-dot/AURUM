@@ -437,7 +437,7 @@ main { overflow: clip; }
 
 .ownerPortraitFrame img {
   object-fit: cover;
-  object-position: 52% 34%;
+  object-position: 52% 24%;
   border-radius: 22px;
 }
 
@@ -1401,6 +1401,26 @@ main { overflow: clip; }
   .hero h1 { font-size: clamp(62px, 8.2vw, 90px); }
   .salonDeckIntro { width: min(21vw, 270px); }
   .footerTop { grid-template-columns: 150px 1fr 90px; }
+}
+
+@media (min-width: 821px) and (max-width: 1180px) and (max-height: 820px) {
+  .heroCopy {
+    padding-top: clamp(56px, 7vh, 78px);
+    padding-bottom: clamp(44px, 6vh, 70px);
+  }
+
+  .ownerHeroMedia {
+    padding-block: clamp(20px, 4vh, 34px);
+  }
+
+  .ownerPortraitFrame {
+    width: min(76%, 455px);
+    max-height: calc(100svh - 122px);
+  }
+
+  .ownerPortraitFrame img {
+    object-position: 52% 14%;
+  }
 }
 
 @media (max-width: 820px) {
